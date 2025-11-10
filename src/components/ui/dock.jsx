@@ -1,4 +1,4 @@
-// my-next-portfolio/src/components/ui/dock.jsx
+
 // 'use client';
 // import Link from 'next/link';
 // import { useRef, useState, useEffect } from 'react';
@@ -98,7 +98,6 @@
 //     );
 // }
 
-// my-next-portfolio/src/components/DockBar.jsx
 // 'use client';
 // import { useEffect, useState } from 'react';
 // import { Dock } from '@/components/ui/dock';
@@ -145,8 +144,6 @@
 //     return <Dock items={items} className={visibilityClasses} />;
 // }
 
-
-// my-next-portfolio/src/components/ui/dock.jsx
 'use client';
 import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
@@ -194,7 +191,7 @@ export function Dock({ items = [], className = '' }) {
             <div
                 className={[
                     'flex items-end gap-2 px-3 py-2',
-                    'rounded-2xl border border-white/15',
+                    'rounded-lg border border-white/15',
                     'bg-white/10 dark:bg-black/30',
                     'backdrop-blur-md shadow-lg',
                 ].join(' ')}
@@ -206,7 +203,7 @@ export function Dock({ items = [], className = '' }) {
                             title={item.label}
                             className={[
                                 'size-12 md:size-14',
-                                'rounded-xl overflow-hidden',
+                                'rounded-md overflow-hidden',
                                 'flex items-center justify-center',
                                 'bg-white/10 hover:bg-white/15',
                                 'border border-white/10',

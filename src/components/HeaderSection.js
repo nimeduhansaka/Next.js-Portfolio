@@ -13,7 +13,7 @@ export default function Header() {
     };
 
     return (
-        <header className="fixed text-white top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
+        <header className="text-white absolute inset-x-0 top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
             <nav className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <button

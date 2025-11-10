@@ -5,7 +5,8 @@ import HeroSection from '@/components/HeroSection';
 import HeaderSection from '@/components/HeaderSection';
 import ContactSection from '@/components/ContactSection';
 import AboutSection from '@/components/AboutSection';
-import CustomCursor from '@/components/CustomCursorSection';
+// import CustomCursor from '@/components/CustomCursorSection';
+import { SmoothCursor } from "@/components/ui/smooth-cursor"
 import WorkSection from '@/components/WorkSection';
 import SnakeAnimationSection from '@/components/SnakeAnimationSection';
 
@@ -55,7 +56,7 @@ export default function Home() {
     return (
         <>
 
-        <CustomCursor />
+        <SmoothCursor />
         <HeaderSection />
 
         <main>

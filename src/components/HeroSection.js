@@ -33,7 +33,7 @@ export default function Hero() {
             <Particles
                 className="absolute inset-0 z-0"
                 quantity={200}
-                ease={80}
+                ease={30}
                 // color={color}
                 refresh
             />
@@ -108,6 +108,8 @@ export default function Hero() {
                                     src={profileImg}
                                     alt="Profile"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    priority
                                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                                 />
                             </div>

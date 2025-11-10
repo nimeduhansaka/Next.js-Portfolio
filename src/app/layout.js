@@ -1,4 +1,5 @@
 import './global.css';
+import DockBar from "@/components/DockBar"
 
 export const metadata = {
     title: 'Portfolio',
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-        <body>{children}</body>
+        <body>
+        {children}
+        <DockBar />
+        </body>
         </html>
     );
 }

@@ -10,7 +10,7 @@ export default function ContactSection() {
     ];
 
     return (
-        <section id="contact" className="curved-loop-wrapper min-h-screen flex items-center py-20 overflow-visible">
+        <section id="contact" className="min-h-screen min-h-[50vh] md:min-h-screen flex items-center py-8 md:py-10 overflow-visible">
             <div className="container mx-auto px-8 overflow-visible">
 
                 <CurvedLoop
@@ -22,7 +22,7 @@ export default function ContactSection() {
                     className="custom-text-style"
                 />
 
-                <div className="max-w-4xl mx-auto text-center mt-40">
+                <div className="max-w-4xl mx-auto text-center mt-30 md:mt-50">
 
                     {/*<h2 className="text-5xl md:text-7xl font-bold tracking-tighter pb-4 mb-8 text-transparent bg-clip-text bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b,#10b981)]">*/}
                     {/*    Let&apos;s Work Together*/}
@@ -35,7 +35,7 @@ export default function ContactSection() {
 
                     <a
                         href="mailto:nimeduhansaka@gmail.com"
-                        className="text-gray-400 inline-block text-3xl md:text-5xl font-bold hover:text-gray-300 transition-colors mb-16 group"
+                        className="text-gray-400 inline-block text-2xl md:text-5xl font-bold hover:text-gray-300 transition-colors mb-12 group"
                     >
                         nimeduhansaka@gmail.com
                         <span className="block h-0.5 w-0 bg-white group-hover:w-full transition-all duration-500" />

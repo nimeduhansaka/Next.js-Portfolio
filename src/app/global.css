@@ -3,6 +3,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+/* Prevent horizontal overflow at the root */
+html {
+    overflow-x: hidden;
+}
+
+/* Clip any accidental horizontal spill from sections/containers */
+section, header, nav, .container {
+    overflow-x: clip;
+}
+
+/* CurvedLoop SVG: ensure it doesn't create layout width overflow */
+svg[viewBox="0 0 1440 120"] {
+    overflow: visible; /* was overflow-visible */
+}
+
+/* Snake SVG: remove the hard left margin on small screens */
+@media (max-width: 640px) {
+    .snake-stage-wrapper svg {
+        margin-left: 0 !important; /* was 4rem */
+    }
+}
+
+
 body {
     margin: 0;
     padding: 0;

@@ -180,20 +180,22 @@ export function Dock({ items = [], className = '' }) {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             className={[
-                'fixed bottom-4 left-1/2 -translate-x-1/2 z-50',
-                'mb-[env(safe-area-inset-bottom)]',
-                // Smooth show/hide
+                'fixed inset-x-0 bottom-4 z-50 flex justify-center',
+                'pb-[env(safe-area-inset-bottom)]',
                 'transition-all duration-300',
+                'pointer-events-none',
                 className,
             ].join(' ')}
             aria-label="Dock navigation"
         >
             <div
                 className={[
+                    'pointer-events-auto',
                     'flex items-end gap-2 px-3 py-2',
                     'rounded-lg border border-white/15',
                     'bg-white/10 dark:bg-black/30',
                     'backdrop-blur-md shadow-lg',
+                    'w-max max-w-[92vw]',
                 ].join(' ')}
             >
                 {items.map((item, i) => {

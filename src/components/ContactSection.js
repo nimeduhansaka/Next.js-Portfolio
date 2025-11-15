@@ -10,8 +10,8 @@ export default function ContactSection() {
     ];
 
     return (
-        <section id="contact" className="min-h-screen flex items-center py-20 ">
-            <div className="container mx-auto px-8">
+        <section id="contact" className="curved-loop-wrapper min-h-screen flex items-center py-20 overflow-visible">
+            <div className="container mx-auto px-8 overflow-visible">
 
                 <CurvedLoop
                     marqueeText="Let's ✦ Build ✦ Something ✦ Great ✦ Together ✦"

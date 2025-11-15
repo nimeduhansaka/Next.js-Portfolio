@@ -3,7 +3,10 @@ import DockBar from "@/components/DockBar"
 
 export const metadata = {
     title: 'Portfolio',
-    description: 'Personal site'
+    description: 'Personal site',
+    icons: {
+        icon: '/icon.svg',
+    }
 };
 
 export default function RootLayout({ children }) {

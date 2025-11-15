@@ -1,4 +1,4 @@
-
+import CurvedLoop from './CurvedLoop';
 import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
 
 export default function ContactSection() {
@@ -12,10 +12,21 @@ export default function ContactSection() {
     return (
         <section id="contact" className="min-h-screen flex items-center py-20">
             <div className="container mx-auto px-8">
+
+                <CurvedLoop
+                    marqueeText="Let's ✦ Build ✦ Something ✦ Great ✦ Together ✦"
+                    speed={3}
+                    curveAmount={500}
+                    direction="right"
+                    interactive={true}
+                    className="custom-text-style"
+                />
+
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter pb-4 mb-8 text-transparent bg-clip-text bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b,#10b981)]">
-                        Let&apos;s Work Together
-                    </h2>
+
+                    {/*<h2 className="text-5xl md:text-7xl font-bold tracking-tighter pb-4 mb-8 text-transparent bg-clip-text bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b,#10b981)]">*/}
+                    {/*    Let&apos;s Work Together*/}
+                    {/*</h2>*/}
 
                     <p className="text-xl text-gray-400 mb-12 -mt-4 max-w-2xl mx-auto">
                         Have a project in mind? I&apos;d love to hear about it. Drop me a line and let&apos;s
@@ -24,13 +35,13 @@ export default function ContactSection() {
 
                     <a
                         href="mailto:nimeduhansaka@gmail.com"
-                        className="inline-block text-3xl md:text-5xl font-bold hover:text-gray-300 transition-colors mb-16 group"
+                        className="text-gray-400 inline-block text-3xl md:text-5xl font-bold hover:text-gray-300 transition-colors mb-16 group"
                     >
                         nimeduhansaka@gmail.com
                         <span className="block h-0.5 w-0 bg-white group-hover:w-full transition-all duration-500" />
                     </a>
 
-                    <div className="flex items-center justify-center gap-8 mb-16">
+                    <div className="text-gray-400 flex items-center justify-center gap-8 mb-16">
                         {socials.map((social, index) => {
                             const Icon = social.icon;
                             return (

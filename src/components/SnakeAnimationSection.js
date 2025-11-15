@@ -160,10 +160,10 @@ export default function SnakeAnimationSection() {
     }, []);
 
     return (
-        <div className="snake-stage-wrapper tracking-wider" ref={wrapperRef} style={{marginTop: 40}}>
+        <div className="snake-stage-wrapper tracking-wider -mb-20" ref={wrapperRef} style={{marginTop: 30}}>
             <div className="stage">
 
-                <h1 className="mt-[4em] whitespace-normal wrap-break-word">Need a break<span
+                <h1 className="mt-[3em] whitespace-normal wrap-break-word">Need a break<span
                         className="inline-block mx-1 align-baseline leading-[0.7] text-[2.5em] md:text-[3em]"> ? </span> {' '}
                     Chill with my UI.
                 </h1>

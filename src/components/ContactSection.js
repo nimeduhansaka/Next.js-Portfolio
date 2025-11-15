@@ -10,7 +10,7 @@ export default function ContactSection() {
     ];
 
     return (
-        <section id="contact" className="min-h-screen flex items-center py-20">
+        <section id="contact" className="min-h-screen flex items-center py-20 ">
             <div className="container mx-auto px-8">
 
                 <CurvedLoop
@@ -22,7 +22,7 @@ export default function ContactSection() {
                     className="custom-text-style"
                 />
 
-                <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-4xl mx-auto text-center mt-40">
 
                     {/*<h2 className="text-5xl md:text-7xl font-bold tracking-tighter pb-4 mb-8 text-transparent bg-clip-text bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b,#10b981)]">*/}
                     {/*    Let&apos;s Work Together*/}

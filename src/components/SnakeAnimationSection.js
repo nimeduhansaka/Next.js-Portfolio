@@ -160,7 +160,7 @@ export default function SnakeAnimationSection() {
     }, []);
 
     return (
-        <div className="snake-stage-wrapper tracking-wider -mb-20" ref={wrapperRef} style={{marginTop: 30}}>
+        <div className="snake-stage-wrapper tracking-wider -mb-20 z-50" ref={wrapperRef} style={{marginTop: 30}}>
             <div className="stage">
 
                 <h1 className="mt-[3em] whitespace-normal wrap-break-word">Need a break<span

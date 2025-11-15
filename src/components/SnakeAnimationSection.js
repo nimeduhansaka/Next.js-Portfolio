@@ -160,7 +160,7 @@ export default function SnakeAnimationSection() {
     }, []);
 
     return (
-        <div className="snake-stage-wrapper tracking-wider -mb-20 z-50" ref={wrapperRef} style={{marginTop: 30}}>
+        <div className="snake-stage-wrapper tracking-wider -mt-20 md:mt-[30px]" ref={wrapperRef} >
             <div className="stage">
 
                 <h1 className="mt-[3em] whitespace-normal wrap-break-word">Need a break<span
@@ -192,7 +192,7 @@ export default function SnakeAnimationSection() {
                     <g id="headLayer"></g>
                 </svg>
 
-                <div className="controls">
+                <div className="controls mx-auto mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center text-sm sm:text-base">
                     <label>Speed <input id="speed" type="range" min="0.5" max="4" step="0.1"
                                         defaultValue="1.6"/></label>
                     <label>Wiggle <input id="amp" type="range" min="0" max="30" step="1" defaultValue="12"/></label>

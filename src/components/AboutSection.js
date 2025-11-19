@@ -1,7 +1,12 @@
+'use client';
+import { useEffect, useRef, useState } from "react";
 import {Code2, Palette, Zap, Award, Rocket} from 'lucide-react';
 import { AuroraText } from "@/components/ui/aurora-text"
 
 export default function AboutSection() {
+    const [isPhilosophyVisible, setIsPhilosophyVisible] = useState(false);
+    const philosophyRef = useRef(null);
+
     const skills = [
         {
             icon: Code2,
@@ -30,6 +35,16 @@ export default function AboutSection() {
         'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'UI/UX Design',
         'Next.js', 'GraphQL', 'AWS', 'Docker', 'PostgreSQL'
     ];
+
+    useEffect(() => {
+        if (!philosophyRef.current) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setIsPhilosophyVisible(entry.isIntersecting),
+            { threshold: 0.2 }
+        );
+        observer.observe(philosophyRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <section id="about" className="min-h-screen flex items-center py-20 relative text-white">
@@ -111,19 +126,25 @@ export default function AboutSection() {
 
 
 
-                        <div className="bg-white/5 p-8 backdrop-blur-sm border border-white/10">
+                        <div
+                            ref={philosophyRef}
+                            className={`bg-white/5 p-8 backdrop-blur-sm border border-white/10 transition-all duration-700 ease-out ${
+                                isPhilosophyVisible ? "opacity-100 blur-0 translate-y-0" : "opacity-0 blur-md translate-y-6"
+                            }`}
+                        >
                             <h3 className="text-xl font-bold mb-4">Philosophy</h3>
                             <div className="mt-2 pt-4 border-t border-white/10">
                                 <p className="text-gray-300 italic">
-                                    "Simplicity is true elegance design stripped of excess reveals purpose.
+                                    &quot;Simplicity is true elegance design stripped of excess reveals purpose.
                                     Each line and form contributes meaning, shaping an experience that feels refined,
-                                    balanced, and deeply human."
+                                    balanced, and deeply human.&quot;
                                 </p>
                                 <p className="mt-2 text-xs uppercase tracking-wider text-gray-500">
                                     — Leonardo da Vinci
                                 </p>
                             </div>
                         </div>
+
                     </div>
                 </div>
 

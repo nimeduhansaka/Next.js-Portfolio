@@ -28,8 +28,8 @@ export default function ContactSection() {
                     {/*    Let&apos;s Work Together*/}
                     {/*</h2>*/}
 
-                    <p className="text-xl text-gray-400 mb-12 -mt-4 max-w-2xl mx-auto">
-                        Have a project in mind? I&apos;d love to hear about it. Drop me a line and let&apos;s
+                    <p className="text-2xl font-bold text-gray-400 mb-12 -mt-4 max-w-2xl mx-auto">
+                        <span className="text-transparent bg-clip-text bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b,#10b981)]">Have a project in mind?</span> I&apos;d love to hear about it. Drop me a line and let&apos;s
                         create something amazing together.
                     </p>
 

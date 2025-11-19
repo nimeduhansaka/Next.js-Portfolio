@@ -1,5 +1,8 @@
+'use client';
+import { useRef } from "react";
 import CurvedLoop from './CurvedLoop';
 import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import TextPressure from './TextPressure';
 
 export default function ContactSection() {
     const socials = [
@@ -8,6 +11,7 @@ export default function ContactSection() {
         { icon: Twitter, label: 'Twitter', href: 'https://x.com/nimedu' },
         { icon: Mail, label: 'Email', href: 'mailto:nimeduhansaka@gmail.com' },
     ];
+
 
     return (
         <section id="contact" className="min-h-screen min-h-[50vh] md:min-h-screen flex items-center py-8 md:py-10 overflow-visible">
@@ -33,15 +37,35 @@ export default function ContactSection() {
                         create something amazing together.
                     </p>
 
-                    <a
+                    {/* <a
                         href="mailto:nimeduhansaka@gmail.com"
                         className="text-gray-400 inline-block text-2xl md:text-5xl font-bold hover:text-gray-300 transition-colors mb-12 group"
                     >
                         nimeduhansaka@gmail.com
                         <span className="block h-0.5 w-0 bg-white group-hover:w-full transition-all duration-500" />
+                    </a> */}
+                    <a
+                        className='-mb-20 group-hover:w-full transition-all duration-500'
+                        href="mailto:nimeduhansaka@gmail.com"
+                    >
+                        <div style={{position: 'relative', height: '200px'}}>
+                        <TextPressure
+                            text="nimeduhansaka@gmail.com"
+                            flex={true}
+                            alpha={false}
+                            stroke={false}
+                            width={true}
+                            weight={true}
+                            italic={true}
+                            textColor="#ffffff"
+                            strokeColor="#ff0000"
+                            minFontSize={36}
+                        />
+                        </div>
                     </a>
 
-                    <div className="text-gray-400 flex items-center justify-center gap-8 mb-16">
+
+                    <div className="text-gray-400 flex items-center justify-center gap-8 -mt-6 mb-16">
                         {socials.map((social, index) => {
                             const Icon = social.icon;
                             return (

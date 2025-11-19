@@ -26,7 +26,7 @@ export default function DockBar() {
     const items = [
         { label: 'Home', href: '#home', icon: (p) => <Home {...p} /> },
         { label: 'About', href: '#about', icon: (p) => <User {...p} /> },
-        { label: 'Projects', href: '#projects', icon: (p) => <Briefcase {...p} /> },
+        { label: 'Projects', href: '#work', icon: (p) => <Briefcase {...p} /> },
         { label: 'Contact', href: '#contact', icon: (p) => <Mail {...p} /> },
         { label: 'GitHub', href: 'https://github.com/nimeduhansaka', external: true, icon: (p) => <Github {...p} /> },
     ];

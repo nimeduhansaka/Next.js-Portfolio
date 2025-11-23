@@ -6,14 +6,30 @@ import profileImg from '@/assets/profile.jpg';
 import { Highlighter } from "@/components/ui/highlighter"
 import { BlurFade } from "@/components/ui/blur-fade"
 import {Particles} from "@/components/ui/particles";
+import TiltedCard from '@/components/TiltedCard';
 
 export default function Hero() {
     const [showIndicator, setShowIndicator] = useState(true);
+    const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+    const [showTooltip, setShowTooltip] = useState(false);
+    const [isColorful, setIsColorful] = useState(false);
     const heroRef = useRef(null);
 
     const scrollToAbout = () => {
         const element = document.getElementById('about');
         element?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setTooltipPos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        });
+    };
+
+    const handleImageClick = () => {
+        setIsColorful(prev => !prev);
     };
 
     useEffect(() => {
@@ -99,23 +115,44 @@ export default function Hero() {
                     </div>
 
                     <BlurFade>
-                    <div className="flex-1 flex justify-center md:justify-end">
-                        <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-white to-gray-400 rounded-full opacity-20 group-hover:opacity-40 blur transition duration-500" />
-                            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/20">
-
-                                <Image
-                                    src={profileImg}
-                                    alt="Profile"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                    priority
-                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                                />
+                        <div className="flex-1 flex justify-center md:justify-end">
+                            <div className="relative group">
+                                <div
+                                    className="absolute -inset-1 bg-gradient-to-r from-white to-gray-400 rounded-full opacity-20 group-hover:opacity-40 blur transition duration-500"/>
+                                <div
+                                    className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/20"
+                                    onMouseMove={handleMouseMove}
+                                    onMouseEnter={() => setShowTooltip(true)}
+                                    onMouseLeave={() => setShowTooltip(false)}
+                                    onClick={handleImageClick}
+                                >
+                                    <Image
+                                        src={profileImg}
+                                        alt="Profile"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        priority
+                                        className={`w-full h-full object-cover transition-all duration-500 ${
+                                            isColorful ? '' : 'grayscale'
+                                        } md:grayscale md:hover:grayscale-0`}
+                                    />
+                                </div>
+                                <div
+                                    className={`absolute pointer-events-none transition-opacity duration-200 ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
+                                    style={{
+                                        left: `${tooltipPos.x}px`,
+                                        top: `${tooltipPos.y}px`,
+                                        transform: 'translate(-50%, -150%)'
+                                    }}
+                                >
+                                    <div className="font-bbh text-sm bg-black/50 backdrop-blur-sm text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap">
+                                        Nimedu Hansaka
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </BlurFade>
+
                 </div>
             </div>
 

@@ -9,6 +9,40 @@ html {
     overflow-x: hidden;
 }
 
+
+.sticky-hero {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 1;
+}
+
+.sticky-hero section {
+    height: 100vh;
+}
+
+main {
+    position: relative;
+}
+
+main > div:last-child {
+    position: relative;
+    z-index: 10;
+}
+
+/* Optional: Add a smooth transition effect */
+.sticky-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+}
+
+
 /* Clip any accidental horizontal spill from sections/containers */
 section, header, nav, .container {
     overflow-x: clip;

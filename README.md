@@ -88,13 +88,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the p
 ---
 
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://your-portfolio-url.com
-NEXT_PUBLIC_SOME_API_KEY=your_api_key_here
-```
-
-Document each variable here so others know how to configure the project.
-
 ---
 
 ## 🧩 Customization

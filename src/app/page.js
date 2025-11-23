@@ -1,5 +1,5 @@
 'use client';
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import Preloader from '@/components/PreloaderSection';
 import HeroSection from '@/components/HeroSection';
 import HeaderSection from '@/components/HeaderSection';
@@ -13,20 +13,31 @@ import SnakeAnimationSection from '@/components/SnakeAnimationSection';
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [exiting, setExiting] = useState(false);
+    const rafId = useRef(null);
+    const ticking = useRef(false);
 
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrolled = window.scrollY;
-            const hero = document.querySelector('.sticky-hero');
-            if (hero && scrolled < window.innerHeight) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            if (!ticking.current) {
+                rafId.current = requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
+                    const hero = document.querySelector('.sticky-hero');
+                    if (hero && scrolled < window.innerHeight) {
+                        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                        hero.style.opacity = 1 - (scrolled / window.innerHeight);
+                    }
+                    ticking.current = false;
+                });
+                ticking.current = true;
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (rafId.current) cancelAnimationFrame(rafId.current);
+        };
     }, []);
 
 

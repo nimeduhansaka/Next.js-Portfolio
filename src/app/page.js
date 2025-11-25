@@ -8,6 +8,7 @@ import AboutSection from '@/components/AboutSection';
 import { SmoothCursor } from "@/components/ui/smooth-cursor"
 import WorkSection from '@/components/WorkSection';
 import SnakeAnimationSection from '@/components/SnakeAnimationSection';
+import BuyMeCoffeeWidget from "@/components/BuyMeCoffeeWidget";
 
 
 export default function Home() {
@@ -92,6 +93,7 @@ export default function Home() {
                     <AboutSection />
                     <WorkSection />
                     <SnakeAnimationSection />
+                    <BuyMeCoffeeWidget />
                     <ContactSection />
                 </div>
             </main>

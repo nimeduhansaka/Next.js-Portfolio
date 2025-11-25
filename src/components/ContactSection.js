@@ -15,7 +15,7 @@ export default function ContactSection() {
 
     return (
         <section id="contact" className="min-h-screen min-h-[50vh] md:min-h-screen flex items-center py-8 md:py-10 overflow-visible">
-            <div className="container mx-auto px-8 overflow-visible">
+            <div id="bottom-section" className="container mx-auto px-8 overflow-visible">
 
                 <CurvedLoop
                     marqueeText="Let's ✦ Build ✦ Something ✦ Great ✦ Together ✦"

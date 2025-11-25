@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+import nextBundleAnalyzer from '@next/bundle-analyzer';
 
+const withBundleAnalyzer = nextBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const nextConfig = {
+  compiler: {
+    reactCompiler: true,
+  },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

@@ -133,11 +133,9 @@ Document the most important `package.json` scripts :
 
 ## 📸 Screenshots
 
-Add one or more screenshots or GIFs of your portfolio:
 
-```markdown
-![Homepage screenshot](./public/screenshots/home.png)
-```
+![Homepage screenshot](./public/home.png)
+
 
 ---
 

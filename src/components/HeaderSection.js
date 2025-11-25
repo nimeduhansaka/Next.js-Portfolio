@@ -60,7 +60,7 @@ export default function Header() {
                     )}
                 </nav>
 
-                <div className="pl-14 border-t border-white/10">
+                <div className="pl-6 md:pl-14 border-t border-white/10">
                 <RadixPreviewLinkCardDemo/>
                 </div>
             </header>

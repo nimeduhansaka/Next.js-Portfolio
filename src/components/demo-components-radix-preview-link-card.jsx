@@ -14,7 +14,7 @@ export const RadixPreviewLinkCardDemo = ({
                                              href = "https://periodic-table-ui.pages.dev/",
                                          }) => {
     return (
-        (<p className="z-100 text-muted-foreground">
+        (<p className="z-100 pl-1 text-muted-foreground sm:text-base text-left">
             Checkout{' '}
             <PreviewLinkCard src="/periodic-preview.png" href={href} followCursor={followCursor}>
                 <PreviewLinkCardTrigger

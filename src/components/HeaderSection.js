@@ -42,8 +42,7 @@ export default function Header() {
 
                         <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {isMenuOpen ? <X size={24}/> : <Menu size={24}/>}
-                        </button>
-                    </div>
+                        </button>                    </div>
 
                     {isMenuOpen && (
                         <div className="md:hidden mt-4 pb-4 flex flex-col gap-4">
@@ -60,7 +59,7 @@ export default function Header() {
                     )}
                 </nav>
 
-                <div className="pl-6 md:pl-14 border-t border-white/10">
+                <div className="hidden md:block pl-6 md:pl-14 border-t border-white/10">
                 <RadixPreviewLinkCardDemo/>
                 </div>
             </header>

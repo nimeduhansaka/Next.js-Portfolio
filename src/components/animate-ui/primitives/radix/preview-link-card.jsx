@@ -56,20 +56,22 @@ function PreviewLinkCard({
   );
 }
 
-function PreviewLinkCardTrigger({
+const PreviewLinkCardTrigger = React.forwardRef(({
   asChild,
   children,
   href: hrefProp,
   ...props
-}) {
+}, ref) => {
   const { href } = usePreviewLinkCard();
 
   return (
-    <HoverCardTriggerPrimitive data-slot="preview-link-card-trigger" asChild {...props}>
+    <HoverCardTriggerPrimitive ref={ref} data-slot="preview-link-card-trigger" asChild {...props}>
       {asChild ? children : <a href={hrefProp ?? href}>{children}</a>}
     </HoverCardTriggerPrimitive>
   );
-}
+});
+PreviewLinkCardTrigger.displayName = 'PreviewLinkCardTrigger';
+
 
 function PreviewLinkCardPortal(props) {
   return (<HoverCardPortalPrimitive data-slot="preview-link-card-portal" {...props} />);
@@ -86,7 +88,7 @@ function buildQueryString(
   return sp.toString();
 }
 
-function PreviewLinkCardContent({
+const PreviewLinkCardContent = React.forwardRef(({
   side = 'top',
   sideOffset = 10,
   align = 'center',
@@ -103,11 +105,12 @@ function PreviewLinkCardContent({
   href: hrefProp,
   style,
   ...props
-}) {
+}, ref) => {
   const { href } = usePreviewLinkCard();
 
   return (
     <HoverCardContentPrimitive
+      ref={ref}
       data-slot="preview-link-card-content"
       side={side}
       sideOffset={sideOffset}
@@ -137,7 +140,8 @@ function PreviewLinkCardContent({
       )}
     </HoverCardContentPrimitive>
   );
-}
+});
+PreviewLinkCardContent.displayName = 'PreviewLinkCardContent';
 
 function PreviewLinkCardImage({
   alt = 'preview image',
@@ -148,8 +152,9 @@ function PreviewLinkCardImage({
   return <img src={src} width={width} height={height} alt={alt} {...props} />;
 }
 
-function PreviewLinkCardArrow(props) {
-  return (<HoverCardArrowPrimitive data-slot="preview-link-card-arrow" {...props} />);
-}
+const PreviewLinkCardArrow = React.forwardRef((props, ref) => (
+  <HoverCardArrowPrimitive ref={ref} data-slot="preview-link-card-arrow" {...props} />
+));
+PreviewLinkCardArrow.displayName = 'PreviewLinkCardArrow';
 
 export { PreviewLinkCard, PreviewLinkCardTrigger, PreviewLinkCardPortal, PreviewLinkCardContent, PreviewLinkCardImage, PreviewLinkCardArrow, usePreviewLinkCard };

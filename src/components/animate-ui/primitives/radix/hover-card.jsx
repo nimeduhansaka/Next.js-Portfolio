@@ -37,10 +37,10 @@ function HoverCard({
   );
 }
 
-function HoverCardTrigger({
+const HoverCardTrigger = React.forwardRef(({
   onMouseMove,
   ...props
-}) {
+}, ref) => {
   const { x, y, followCursor } = useHoverCard();
 
   const handleMouseMove = (event) => {
@@ -61,8 +61,9 @@ function HoverCardTrigger({
     }
   };
 
-  return (<HoverCardPrimitive.Trigger data-slot="hover-card-trigger" onMouseMove={handleMouseMove} {...props} />);
-}
+  return (<HoverCardPrimitive.Trigger ref={ref} data-slot="hover-card-trigger" onMouseMove={handleMouseMove} {...props} />);
+});
+HoverCardTrigger.displayName = 'HoverCardTrigger';
 
 function HoverCardPortal(props) {
   const { isOpen } = useHoverCard();
@@ -76,7 +77,7 @@ function HoverCardPortal(props) {
   );
 }
 
-function HoverCardContent({
+const HoverCardContent = React.forwardRef(({
   align,
   alignOffset,
   side,
@@ -89,14 +90,16 @@ function HoverCardContent({
   hideWhenDetached,
   style,
   transition = { type: 'spring', stiffness: 300, damping: 25 },
+  asChild,
   ...props
-}) {
+}, ref) => {
   const { x, y, followCursor, followCursorSpringOptions } = useHoverCard();
   const translateX = useSpring(x, followCursorSpringOptions);
   const translateY = useSpring(y, followCursorSpringOptions);
 
   return (
     <HoverCardPrimitive.Content
+      ref={ref}
       asChild
       forceMount
       align={align}
@@ -130,10 +133,12 @@ function HoverCardContent({
         {...props} />
     </HoverCardPrimitive.Content>
   );
-}
+});
+HoverCardContent.displayName = 'HoverCardContent';
 
-function HoverCardArrow(props) {
-  return <HoverCardPrimitive.Arrow data-slot="hover-card-arrow" {...props} />;
-}
+const HoverCardArrow = React.forwardRef((props, ref) => (
+  <HoverCardPrimitive.Arrow ref={ref} data-slot="hover-card-arrow" {...props} />
+));
+HoverCardArrow.displayName = 'HoverCardArrow';
 
 export { HoverCard, HoverCardTrigger, HoverCardPortal, HoverCardContent, HoverCardArrow, useHoverCard };

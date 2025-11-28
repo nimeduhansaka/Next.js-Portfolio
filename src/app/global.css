@@ -116,12 +116,12 @@ body {
     height: 100%; width: 100%;
     z-index: 1;
     background-color: transparent;
-    mask: repeating-linear-gradient(90deg, transparent 0, transparent 6px, black 7px, black 8px);
-    webkit-mask-image: repeating-linear-gradient(90deg, transparent 0, transparent 6px, black 7px, black 8px); /* add this */
+    -webkit-mask-image: repeating-linear-gradient(90deg, transparent 0, transparent 6px, black 7px, black 8px);
+    mask-image: repeating-linear-gradient(90deg, transparent 0, transparent 6px, black 7px, black 8px);
 }
 
 /*// If not supported, hide for PreLoader*/
-@supports not ((mask: linear-gradient(#000, #000)) or (webkit-mask: linear-gradient(#000, #000))) {
+@supports not ((mask: linear-gradient(#000, #000)) or (-webkit-mask: linear-gradient(#000, #000))) {
     .loader { display: none; }
 }
 
@@ -137,7 +137,7 @@ body {
             radial-gradient(circle at 45% 55%, #0f0 0%, transparent 45%),
             radial-gradient(circle at 55% 45%, #00f 0%, transparent 45%);
     mask: radial-gradient(circle at 50% 50%, transparent 0%, transparent 10%, black 25%);
-    webkit-mask: radial-gradient(circle at 50% 50%, transparent 0%, transparent 10%, black 25%); /* add this */
+    -webkit-mask: radial-gradient(circle at 50% 50%, transparent 0%, transparent 10%, black 25%); /* add this */
     animation: transform-animation 2s infinite alternate, opacity-animation 4s infinite;
     animation-timing-function: cubic-bezier(0.6, 0.8, 0.5, 1);
 }
@@ -342,7 +342,7 @@ html {
 
 div.mouse-container{
     position:absolute;
-    items-align:center;
+    align-items:center;
     display:flex;
     bottom: 10px;
 /*border:solid 1px red;*/

@@ -5,7 +5,7 @@ export const metadata = {
     title: 'Portfolio',
     description: 'Personal site',
     icons: {
-        icon: './icon.svg',
+        icon: '/icon.svg',
     }
 };
 

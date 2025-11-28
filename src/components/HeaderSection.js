@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import "./header.css"
-import {RadixPreviewLinkCardDemo} from '@/components/demo-components-radix-preview-link-card'
+
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +16,7 @@ export default function Header() {
     return (
         <>
             <header
-                className="text-white absolute inset-x-0 top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm ">
+                className="text-white absolute inset-x-0 top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-sm">
                 <nav className="container mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
                         <button
@@ -58,10 +58,6 @@ export default function Header() {
                         </div>
                     )}
                 </nav>
-
-                <div className="hidden md:block pl-6 md:pl-14 border-t border-white/10">
-                <RadixPreviewLinkCardDemo/>
-                </div>
             </header>
         </>
     );

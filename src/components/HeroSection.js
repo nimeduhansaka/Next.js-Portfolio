@@ -32,11 +32,17 @@ export default function Hero() {
         setIsColorful(prev => !prev);
     };
 
+    const [showPopup, setShowPopup] = useState(false);
+
     useEffect(() => {
         const el = heroRef.current;
         if (!el) return;
         const io = new IntersectionObserver(
-            ([entry]) => setShowIndicator(entry.isIntersecting && entry.intersectionRatio > 0.6),
+            ([entry]) => {
+                const isVisible = entry.isIntersecting && entry.intersectionRatio > 0.6;
+                setShowIndicator(isVisible);
+                setShowPopup(isVisible);
+            },
             { threshold: [0, 0.6, 1] }
         );
         io.observe(el);
@@ -59,12 +65,21 @@ export default function Hero() {
                     <div className="flex-1 space-y-6">
                         <div className="overflow-hidden">
                             <BlurFade>
-                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter animate-slide-up">
-                <span className="gradient-sweep">
-                  <span className="base">Creative</span>
-                  <span className="fill" aria-hidden>Creative</span>
-                </span>
-                            </h1>
+                                <div className="relative inline-block">
+                                    <h1 className="text-6xl md:text-8xl font-bold tracking-tighter animate-slide-up">
+                                        <span className="gradient-sweep">
+                                          <span className="base">Creative</span>
+                                          <span className="fill" aria-hidden>Creative</span>
+                                        </span>
+                                    </h1>
+                                    {/* <div className="absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 transform -translate-y-3.4 -rotate-8 translate-x-10">
+                                        <Image
+                                            src="/hat.png"
+                                            alt="Santa Hat"
+                                            fill
+                                        />
+                                    </div> */}
+                                </div>
                             </BlurFade>
                         </div>
 
@@ -163,6 +178,26 @@ export default function Hero() {
                     </div>
                 </div>
             )}
+
+            {/* Latest Work Popup */}
+            <div
+                className={`fixed bottom-6 right-14 z-50 transition-all duration-700 transform ${
+                    showPopup ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+                }`}
+            >
+                <div className="relative w-44 h-18 overflow-hidden shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300 group border border-white/10">
+                    <Image
+                        src="/periodic-preview.png"
+                        alt="Latest Work"
+                        fill
+                        className="object-cover blur-[2px] brightness-80 transition-all duration-500 group-hover:scale-110 group-hover:blur-0 group-hover:brightness-75"
+                    />
+                    <div className="absolute inset-0 flex flex-col justify-center px-4 z-10">
+                        <p className="text-[10px] text-gray-200 uppercase tracking-widest font-medium mb-0.5 drop-shadow-md">Latest Work</p>
+                        <h3 className="text-white font-bold text-sm drop-shadow-md group-hover:text-blue-300 transition-colors">Periodic Table</h3>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 }

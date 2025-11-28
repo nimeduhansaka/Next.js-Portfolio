@@ -181,7 +181,7 @@ export default function Hero() {
 
             {/* Latest Work Popup */}
             <div
-                className={`fixed bottom-6 right-15 z-50 transition-all duration-700 transform ${
+                className={`fixed bottom-6 right-15 z-50 transition-all duration-700 transform hidden md:block ${
                     showPopup ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
                 }`}
             >

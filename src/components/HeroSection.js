@@ -147,7 +147,7 @@ export default function Hero() {
                                         } md:grayscale md:hover:grayscale-0`}
                                     />
                                 </div>
-                                
+
                                 {/* Santa Hat Overlay */}
                                 <motion.div
                                     initial={{ y: -200, opacity: 0 }}
@@ -158,7 +158,7 @@ export default function Hero() {
                                         damping: 10,
                                         delay: 1.5 // Delay slightly to appear after other elements
                                     }}
-                                    className="absolute -top-12 -right-2 md:-top-18 md:-right-4 w-36 h-36 md:w-48 md:h-48 z-20 pointer-events-none"
+                                    className="absolute -top-14 -right-2 md:-top-18 md:-right-4 w-36 h-36 md:w-48 md:h-48 z-20 pointer-events-none"
                                 >
                                     <Image
                                         src="/hat.png"

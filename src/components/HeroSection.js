@@ -72,13 +72,13 @@ export default function Hero() {
                                           <span className="fill" aria-hidden>Creative</span>
                                         </span>
                                     </h1>
-                                    {/* <div className="absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 transform -translate-y-3.4 -rotate-8 translate-x-10">
+                                     {/* <div className="absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 transform -translate-y-3.4 -rotate-8 translate-x-10">
                                         <Image
                                             src="/hat.png"
                                             alt="Santa Hat"
                                             fill
                                         />
-                                    </div> */}
+                                    </div>  */}
                                 </div>
                             </BlurFade>
                         </div>

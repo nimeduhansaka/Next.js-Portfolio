@@ -7,6 +7,7 @@ import { Highlighter } from "@/components/ui/highlighter"
 import { BlurFade } from "@/components/ui/blur-fade"
 import {Particles} from "@/components/ui/particles";
 import TiltedCard from '@/components/TiltedCard';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
     const [showIndicator, setShowIndicator] = useState(true);
@@ -72,13 +73,7 @@ export default function Hero() {
                                           <span className="fill" aria-hidden>Creative</span>
                                         </span>
                                     </h1>
-                                     {/* <div className="absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 transform -translate-y-3.4 -rotate-8 translate-x-10">
-                                        <Image
-                                            src="/hat.png"
-                                            alt="Santa Hat"
-                                            fill
-                                        />
-                                    </div>  */}
+
                                 </div>
                             </BlurFade>
                         </div>
@@ -152,6 +147,29 @@ export default function Hero() {
                                         } md:grayscale md:hover:grayscale-0`}
                                     />
                                 </div>
+                                
+                                {/* Santa Hat Overlay */}
+                                <motion.div
+                                    initial={{ y: -200, opacity: 0 }}
+                                    animate={{ y: 8, opacity: 1, rotate: 14, x: 8 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 120,
+                                        damping: 10,
+                                        delay: 1.5 // Delay slightly to appear after other elements
+                                    }}
+                                    className="absolute -top-12 -right-2 md:-top-18 md:-right-4 w-36 h-36 md:w-48 md:h-48 z-20 pointer-events-none"
+                                >
+                                    <Image
+                                        src="/hat.png"
+                                        alt="Santa Hat"
+                                        fill
+                                        sizes="(max-width: 768px) 150px, 200px"
+                                        className="object-contain drop-shadow-[5px_20px_10px_rgba(0,0,0,0.6)]"
+                                        priority
+                                    />
+                                </motion.div>
+                                
                                 <div
                                     className={`absolute pointer-events-none transition-opacity duration-200 ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
                                     style={{

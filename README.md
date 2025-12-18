@@ -31,16 +31,14 @@ A modern, responsive developer portfolio built with **Next.js**, designed to sho
 
 ## 📁 Project Structure
 
-A typical Next.js portfolio might look like this (adjust to match your repo):
-
 ```bash
 .
 ├── public/             # Static assets (images, icons, etc.)
 ├── src/ or pages/      # Application pages and routes
 │   ├── index.tsx       # Home / main portfolio page
-│   ├── about.tsx       # About page (if separate)
-│   ├── projects.tsx    # Projects listing (if separate)
-│   └── api/            # API routes (if any)
+│   ├── about.tsx       # About page 
+│   ├── projects.tsx    # Projects listing 
+│   └── api/            # API routes 
 ├── components/         # Reusable React components
 ├── styles/             # Global and component styles
 ├── package.json
@@ -97,7 +95,7 @@ You can customize this portfolio by editing:
 - **Profile information** – name, title, summary, social links
 - **Sections** – enable/disable or reorder components like About, Projects, Skills, etc.
 - **Content data** – project details, skills list, experience timeline
-- **Theme** – colors, fonts, light/dark mode (if implemented)
+- **Theme** – colors, fonts, light/dark mode
 
 
 Common places to change content include:
@@ -184,6 +182,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 **Nimedu Hansaka**
 
 - GitHub: [nimeduhansaka](https://github.com/nimeduhansaka)
-- LinkedIn: [Nimedu]([https://github.com/nimeduhansaka](https://www.linkedin.com/in/nimedu-hansaka-9721b4383))
+- LinkedIn: [Nimedu](https://www.linkedin.com/in/nimedu-hansaka-9721b4383)
 
 If you use this template or find it helpful, consider giving the repository a ⭐ on GitHub!

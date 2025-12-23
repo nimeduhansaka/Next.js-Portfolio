@@ -32,7 +32,7 @@ export default function ScrollProgress() {
 
     return (
         <motion.div
-            className="fixed top-8 left-8 z-50 hidden md:block"
+            className="fixed top-8 left-8 z-50 hidden"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}

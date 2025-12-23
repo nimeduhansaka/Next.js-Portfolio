@@ -3,7 +3,7 @@ import DockBar from "@/components/DockBar"
 
 export const metadata = {
     title: 'Portfolio',
-    description: 'Personal site',
+    description: 'Nimedu Hansaka Personal site',
     icons: {
         icon: '/icon.svg',
     }

@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import {useEffect, useState, useRef} from "react";
 import Preloader from '@/components/PreloaderSection';
 import HeroSection from '@/components/HeroSection';
@@ -9,6 +10,7 @@ import { SmoothCursor } from "@/components/ui/smooth-cursor"
 import WorkSection from '@/components/WorkSection';
 import SnakeAnimationSection from '@/components/SnakeAnimationSection';
 import BuyMeCoffeeWidget from "@/components/BuyMeCoffeeWidget";
+import ScrollProgress from '@/components/ScrollProgress';
 
 
 export default function Home() {
@@ -82,6 +84,7 @@ export default function Home() {
     return (
         <>
             <SmoothCursor />
+            <ScrollProgress />
             <HeaderSection />
 
             <main className="relative">

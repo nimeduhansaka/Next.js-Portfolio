@@ -128,7 +128,7 @@ export default function Hero() {
                         <div className="flex-1 flex justify-center md:justify-end">
                             <div className="relative group">
                                 <div
-                                    className="absolute -inset-1 bg-gradient-to-r from-white to-gray-400 rounded-full opacity-20 group-hover:opacity-40 blur transition duration-500"/>
+                                    className="absolute -inset-1 bg-linear-to-r from-white to-gray-400 rounded-full opacity-20 group-hover:opacity-40 blur transition duration-500"/>
                                 <div
                                     className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/20"
                                     onMouseMove={handleMouseMove}

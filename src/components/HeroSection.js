@@ -99,7 +99,7 @@ export default function Hero() {
                             </BlurFade>
              </div> */}
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                     <div className="flex-1 space-y-6">
                         <div className="relative">
                             <AnimatePresence mode="wait">
@@ -161,8 +161,6 @@ export default function Hero() {
 
                         <div className="overflow-hidden">
                             <p className="leading-relaxed text-lg md:text-xl text-gray-400 max-w-md animate-slide-up animation-delay-400">
-                                {/*Crafting digital experiences with precision and passion.*/}
-                                {/*Specialized in modern web development.*/}
                                 Crafting{" "}
                                 <Highlighter action="underline" color="#FF9800">
                                     Digital Experiences

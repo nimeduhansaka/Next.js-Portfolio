@@ -7,13 +7,23 @@ import { Highlighter } from "@/components/ui/highlighter"
 import { BlurFade } from "@/components/ui/blur-fade"
 import {Particles} from "@/components/ui/particles";
 import TiltedCard from '@/components/TiltedCard';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Hero() {
     const [showIndicator, setShowIndicator] = useState(true);
     const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
     const [showTooltip, setShowTooltip] = useState(false);
     const [isColorful, setIsColorful] = useState(false);
+    const [textState, setTextState] = useState('creative');
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTextState(prev => prev === 'creative' ? 'newyear' : 'creative');
+        }, 6000);
+        return () => clearInterval(interval);
+    }, []);
+    
+
     const heroRef = useRef(null);
 
     const scrollToAbout = () => {
@@ -62,7 +72,7 @@ export default function Hero() {
             />
 
             <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                {/* <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                     <div className="flex-1 space-y-6">
                         <div className="overflow-hidden">
                             <BlurFade>
@@ -87,7 +97,66 @@ export default function Hero() {
                 </span>
                             </h1>
                             </BlurFade>
-             </div>
+             </div> */}
+
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div className="flex-1 space-y-6">
+                        <div className="relative">
+                            <AnimatePresence mode="wait">
+                                {textState === 'creative' ? (
+                                    <motion.div
+                                        key="creative"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <div className="relative inline-block">
+                                                <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
+                                                    <span className="gradient-sweep">
+                                                        <span className="base">Creative</span>
+                                                        <span className="fill" aria-hidden>Creative</span>
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                        <div className="overflow-hidden">
+                                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
+                                                <span className="gradient-sweep">
+                                                    <span className="base">Developer</span>
+                                                    <span className="fill" aria-hidden>Developer</span>
+                                                </span>
+                                            </h1>
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="newyear"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <div className="relative inline-block">
+                                                <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white">
+                                                    Happy
+                                                </h1>
+                                            </div>
+                                        </div>
+                                        <div className="overflow-hidden">
+                                            <h1
+                                                className="text-6xl md:text-8xl font-bold tracking-tighter text-transparent bg-clip-text"
+                                                style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b, #10b981)' }}
+                                            >
+                                                New Year!
+                                            </h1>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
 
 
                         <div className="overflow-hidden">
@@ -149,7 +218,7 @@ export default function Hero() {
                                 </div>
 
                                 {/* Santa Hat Overlay */}
-                                <motion.div
+                                {/* <motion.div
                                     initial={{ y: -200, opacity: 0 }}
                                     animate={{ y: 8, opacity: 1, rotate: 14, x: 8 }}
                                     transition={{
@@ -168,7 +237,7 @@ export default function Hero() {
                                         className="object-contain drop-shadow-[5px_20px_10px_rgba(0,0,0,0.6)]"
                                         priority
                                     />
-                                </motion.div>
+                                </motion.div> */}
                                 
                                 <div
                                     className={`absolute pointer-events-none transition-opacity duration-200 ${showTooltip ? 'opacity-100' : 'opacity-0'}`}

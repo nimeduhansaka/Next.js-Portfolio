@@ -141,18 +141,14 @@ export default function Hero() {
 
             <div className={`relative w-full h-[60vh] md:h-[80vh] max-w-5xl mx-auto flex justify-center items-end mt-auto pointer-events-none z-0 transition-all duration-[1200ms] ease-out transform ${portraitVisible ? 'translate-y-0 opacity-100' : 'translate-y-[15vh] opacity-0'}`}>
                 {/* Overlay gradient to smoothly blend the image edges with the black background */}
-                <div className="absolute inset-0 z-10 pointer-events-none" 
-                     style={{
-                         background: 'radial-gradient(circle at 50% 50%, transparent 20%, #000000 80%)'
-                     }}
-                ></div>
+                <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_at_50%_40%,transparent_50%,#000000_100%)] md:bg-[radial-gradient(circle_at_50%_50%,transparent_20%,#000000_80%)]"></div>
                 {/* Bottom dark shade to blend with background and hide the square edge */}
                 <div className="absolute bottom-0 left-0 right-0 h-[16vh] bg-gradient-to-t from-black via-black/90 to-transparent z-10 pointer-events-none"></div>
                 <Image
                     src={DarkPortrait}
                     alt="Dark Portrait"
                     fill
-                    className="object-contain object-bottom opacity-90"
+                    className="object-contain object-bottom opacity-100 brightness-110 md:opacity-90 md:brightness-100"
                     sizes="(max-width: 1024px) 100vw, 1024px"
                     priority={true}
                     quality={100}

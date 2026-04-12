@@ -1,49 +1,47 @@
 'use client';
 import Image from 'next/image';
-import { ArrowDown, Download } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import profileImg from '@/assets/profile.jpg';
 import { Highlighter } from "@/components/ui/highlighter"
 import { BlurFade } from "@/components/ui/blur-fade"
-import {Particles} from "@/components/ui/particles";
-import TiltedCard from '@/components/TiltedCard';
-import { motion, AnimatePresence } from 'framer-motion';
+import DarkPortrait from '@/assets/DarkPortrait.png';
 
 export default function Hero() {
     const [showIndicator, setShowIndicator] = useState(true);
-    const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
-    const [showTooltip, setShowTooltip] = useState(false);
-    const [isColorful, setIsColorful] = useState(false);
-    const [textState, setTextState] = useState('creative');
+    const heroRef = useRef(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const [portraitVisible, setPortraitVisible] = useState(false);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setTextState(prev => prev === 'creative' ? 'newyear' : 'creative');
-        }, 6000);
-        return () => clearInterval(interval);
-    }, []);
-    
+        const handleScroll = () => {
+            if (window.scrollY > 10) {
+                setPortraitVisible(true);
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
 
-    const heroRef = useRef(null);
+        if (typeof window !== "undefined") {
+            // Defer initial check to next tick to avoid React set-state-in-effect linter warning
+            setTimeout(() => {
+                const isMobile = window.innerWidth < 768;
+                if (isMobile || window.scrollY > 10) {
+                    // Instantly trigger animation on mobile, or if already scrolled on desktop
+                    setPortraitVisible(true);
+                } else {
+                    window.addEventListener('scroll', handleScroll, { passive: true });
+                }
+            }, 0);
+        }
+        return () => {
+            if (typeof window !== "undefined") {
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, []);
 
     const scrollToAbout = () => {
         const element = document.getElementById('about');
         element?.scrollIntoView({ behavior: 'smooth' });
     };
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        setTooltipPos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        });
-    };
-
-    const handleImageClick = () => {
-        setIsColorful(prev => !prev);
-    };
-
-    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         const el = heroRef.current;
@@ -61,231 +59,106 @@ export default function Hero() {
     }, []);
 
     return (
-        <section id="home" ref={heroRef} className="min-h-screen flex items-center justify-center relative">
-
-            <Particles
-                className="absolute inset-0 z-0"
-                quantity={200}
-                ease={30}
-                // color={color}
-                refresh
-            />
-
-            <div className="container mx-auto px-6">
-                {/* <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="flex-1 space-y-6">
-                        <div className="overflow-hidden">
-                            <BlurFade>
-                                <div className="relative inline-block">
-                                    <h1 className="text-6xl md:text-8xl font-bold tracking-tighter animate-slide-up">
-                                        <span className="gradient-sweep">
-                                          <span className="base">Creative</span>
-                                          <span className="fill" aria-hidden>Creative</span>
-                                        </span>
-                                    </h1>
-
-                                </div>
-                            </BlurFade>
-                        </div>
-
-                        <div className="overflow-hidden">
-                            <BlurFade>
-                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter animate-slide-up animation-delay-200">
-                <span className="gradient-sweep">
-                  <span className="base">Developer</span>
-                  <span className="fill" aria-hidden>Developer</span>
-                </span>
-                            </h1>
-                            </BlurFade>
-             </div> */}
-
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="flex-1 space-y-6">
-                        <div className="relative">
-                            <AnimatePresence mode="wait">
-                                {textState === 'creative' ? (
-                                    <motion.div
-                                        key="creative"
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <div className="relative inline-block">
-                                                <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
-                                                    <span className="gradient-sweep">
-                                                        <span className="base">Creative</span>
-                                                        <span className="fill" aria-hidden>Creative</span>
-                                                    </span>
-                                                </h1>
-                                            </div>
-                                        </div>
-                                        <div className="overflow-hidden">
-                                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
-                                                <span className="gradient-sweep">
-                                                    <span className="base">Developer</span>
-                                                    <span className="fill" aria-hidden>Developer</span>
-                                                </span>
-                                            </h1>
-                                        </div>
-                                    </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="newyear"
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <div className="relative inline-block">
-                                                <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white">
-                                                    Happy
-                                                </h1>
-                                            </div>
-                                        </div>
-                                        <div className="overflow-hidden">
-                                            <h1
-                                                className="text-6xl md:text-8xl font-bold tracking-tighter text-transparent bg-clip-text"
-                                                style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b, #10b981)' }}
-                                            >
-                                                New Year!
-                                            </h1>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-
-
-                        <div className="overflow-hidden">
-                            <p className="leading-relaxed text-lg md:text-xl text-gray-400 max-w-md animate-slide-up animation-delay-400">
-                                Crafting{" "}
-                                <Highlighter action="underline" color="#FF9800">
-                                    Digital Experiences
-                                </Highlighter>{" "}
-                                with Precision and Passion. Specialized in Modern{" "}
-                                <Highlighter action="highlight" color="#F5F5F4">
-                                     Web Development.
-                                </Highlighter>{" "}
-
-                            </p>
-                        </div>
-
-                        <div className="overflow-hidden">
-                            <div className="animate-slide-up animation-delay-400">
-                                <div className="group relative inline-block overflow-hidden">
-                                    <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-                                    <a
-                                        href="/Nimedu-Hansaka-CV.pdf"
-                                        download="Nimedu-Hansaka-CV.pdf"
-                                        className="relative z-10 inline-flex items-center gap-2 px-6 py-3 border text-white border-white transition-colors duration-300 group-hover:text-black"
-                                        aria-label="Download CV"
-                                    >
-                                        <Download size={18} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-                                        <span>Download CV</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+        <section id="home" ref={heroRef} className="min-h-screen flex flex-col justify-start pt-[14vh] md:pt-[12vh] lg:pt-[14vh] xl:pt-[18vh] relative text-center overflow-hidden">
+            <div className="container mx-auto px-6 relative z-10 flex-shrink-0 mb-4 md:mb-6 xl:mb-8">
+                <div className="flex flex-col items-center flex-1 max-w-4xl mx-auto text-center gap-4 md:gap-5 xl:gap-7">
                     <BlurFade>
-                        <div className="flex-1 flex justify-center md:justify-end">
-                            <div className="relative group">
-                                <div
-                                    className="absolute -inset-1 bg-linear-to-r from-white to-gray-400 rounded-full opacity-20 group-hover:opacity-40 blur transition duration-500"/>
-                                <div
-                                    className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/20"
-                                    onMouseMove={handleMouseMove}
-                                    onMouseEnter={() => setShowTooltip(true)}
-                                    onMouseLeave={() => setShowTooltip(false)}
-                                    onClick={handleImageClick}
-                                >
-                                    <Image
-                                        src={profileImg}
-                                        alt="Profile"
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                        priority
-                                        className={`w-full h-full object-cover transition-all duration-500 ${
-                                            isColorful ? '' : 'grayscale'
-                                        } md:grayscale md:hover:grayscale-0`}
-                                    />
-                                </div>
-
-                                {/* Santa Hat Overlay */}
-                                {/* <motion.div
-                                    initial={{ y: -200, opacity: 0 }}
-                                    animate={{ y: 8, opacity: 1, rotate: 14, x: 8 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 120,
-                                        damping: 10,
-                                        delay: 1.5 // Delay slightly to appear after other elements
-                                    }}
-                                    className="absolute -top-14 -right-2 md:-top-18 md:-right-4 w-36 h-36 md:w-48 md:h-48 z-20 pointer-events-none"
-                                >
-                                    <Image
-                                        src="/hat.png"
-                                        alt="Santa Hat"
-                                        fill
-                                        sizes="(max-width: 768px) 150px, 200px"
-                                        className="object-contain drop-shadow-[5px_20px_10px_rgba(0,0,0,0.6)]"
-                                        priority
-                                    />
-                                </motion.div> */}
-                                
-                                <div
-                                    className={`absolute pointer-events-none transition-opacity duration-200 ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
-                                    style={{
-                                        left: `${tooltipPos.x}px`,
-                                        top: `${tooltipPos.y}px`,
-                                        transform: 'translate(-50%, -150%)'
-                                    }}
-                                >
-                                    <div className="font-bbh text-sm bg-black/50 backdrop-blur-sm text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap">
-                                        Nimedu Hansaka
+                        <style>{`
+                            @keyframes infinite-scroll {
+                                0% { transform: translateX(0); }
+                                100% { transform: translateX(-50%); }
+                            }
+                            .animate-infinite-scroll {
+                                animation: infinite-scroll 20s linear infinite;
+                            }
+                        `}</style>
+                        <div 
+                            className="w-[260px] md:w-[400px] mx-auto overflow-hidden mb-3 md:mb-4 relative"
+                            style={{
+                                maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                                WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+                            }}
+                        >
+                            <div className="flex w-max animate-infinite-scroll hover:paused">
+                                {[1, 2].map((group) => (
+                                    <div key={group} className="flex gap-3 pr-3">
+                                        {["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "UI/UX Design", "React Native"].map((skill, idx) => (
+                                            <div 
+                                                key={idx} 
+                                                className="bg-[#1E1E1E] border border-white/5 opacity-90 px-4 py-2 rounded-full text-xs md:text-sm font-medium text-neutral-300 w-max"
+                                            >
+                                                {skill}
+                                            </div>
+                                        ))}
                                     </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
+
+                        <h1 className="font-serif tracking-tight lg:mt-2 xl:mt-0">
+                            <span className="block text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] leading-[1.1] text-neutral-400 mb-1 xl:mb-2">
+                                Creative,
+                            </span>
+                            <span className="block text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] leading-[1.1] text-white font-medium">
+                                Developer.
+                            </span>
+                        </h1>
                     </BlurFade>
 
-                </div>
-            </div>
+                    <BlurFade delay={0.2}>
+                        <p className="text-lg md:text-xl text-neutral-400 max-w-xl mx-auto leading-relaxed md:px-6">
+                            Crafting{" "}
+                            <Highlighter action="underline" color="#FF9800">
+                                Digital Experiences
+                            </Highlighter>{" "}
+                            with Precision and Passion. Specialized in Modern{" "}
+                            <Highlighter action="highlight" color="#F5F5F4">
+                                Web Development.
+                            </Highlighter>
+                        </p>
+                    </BlurFade>
 
-            {showIndicator && (
-                <div className="mouse-container">
-                    <div className="mouse">
-                        <button className="scroll-down" onClick={scrollToAbout} aria-label="Scroll to About"></button>
-                    </div>
-                </div>
-            )}
-
-            {/* Latest Work Popup */}
-            <div
-                className={`fixed bottom-6 right-15 z-50 transition-all duration-700 transform hidden md:block ${
-                    showPopup ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
-                }`}
-            >
-                <div className="relative w-44 h-18 overflow-hidden shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300 group border border-white/10">
-                    <Image
-                        src="/periodic-preview.png"
-                        alt="Latest Work"
-                        fill
-                        sizes="176px"
-                        className="object-cover blur-[2px] brightness-80 transition-all duration-500 group-hover:scale-110 group-hover:blur-0 group-hover:brightness-75"
-                    />
-                    <a href='https://periodic-table-ui.pages.dev/' target="_blank">
-                        <div className="absolute inset-0 flex flex-col justify-center px-4 z-10">
-                            <p className="text-[10px] text-gray-200 uppercase tracking-widest font-medium mb-0.5 drop-shadow-md">Latest Work</p>
-                            <h3 className="text-white font-bold text-sm drop-shadow-md group-hover:text-blue-300 transition-colors">Periodic Table</h3>
+                    <BlurFade delay={0.4}>
+                        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 mt-1 md:mt-2 font-sans">
+                            <a
+                                href="#work"
+                                className="inline-flex items-center justify-center px-8 py-3.5 bg-[#d2f2cb] text-black font-medium rounded-[20px] shadow-[0_4px_20px_rgba(210,242,203,0.15)] hover:shadow-[0_15px_40px_rgba(210,242,203,0.4)] hover:bg-[#cbf0c2] hover:-translate-y-1 transition-all duration-400 ease-out tracking-wide text-sm md:text-base"
+                            >
+                                See work
+                            </a>
+                            <a
+                                href="https://periodic-table-ui.pages.dev/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-white/20 text-white hover:bg-white hover:text-black font-medium rounded-[20px] hover:shadow-[0_15px_40px_rgba(255,255,255,0.15)] hover:-translate-y-1 transition-all duration-400 ease-out tracking-wide text-sm md:text-base"
+                            >
+                                Latest work
+                            </a>
                         </div>
-                    </a>
+                    </BlurFade>
                 </div>
             </div>
+
+            <div className={`relative w-full h-[60vh] md:h-[80vh] max-w-5xl mx-auto flex justify-center items-end mt-auto pointer-events-none z-0 transition-all duration-[1200ms] ease-out transform ${portraitVisible ? 'translate-y-0 opacity-100' : 'translate-y-[15vh] opacity-0'}`}>
+                {/* Overlay gradient to smoothly blend the image edges with the black background */}
+                <div className="absolute inset-0 z-10 pointer-events-none" 
+                     style={{
+                         background: 'radial-gradient(circle at 50% 50%, transparent 20%, #000000 80%)'
+                     }}
+                ></div>
+                {/* Bottom dark shade to blend with background and hide the square edge */}
+                <div className="absolute bottom-0 left-0 right-0 h-[16vh] bg-gradient-to-t from-black via-black/90 to-transparent z-10 pointer-events-none"></div>
+                <Image
+                    src={DarkPortrait}
+                    alt="Dark Portrait"
+                    fill
+                    className="object-contain object-bottom opacity-90"
+                    sizes="(max-width: 1024px) 100vw, 1024px"
+                    priority={false}
+                    quality={100}
+                />
+            </div>
+
         </section>
     );
 }

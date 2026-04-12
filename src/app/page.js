@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {useEffect, useState, useRef} from "react";
 import Preloader from '@/components/PreloaderSection';
 import HeroSection from '@/components/HeroSection';
-import HeaderSection from '@/components/HeaderSection';
 import ContactSection from '@/components/ContactSection';
 import AboutSection from '@/components/AboutSection';
 import { SmoothCursor } from "@/components/ui/smooth-cursor"
@@ -11,37 +10,12 @@ import WorkSection from '@/components/WorkSection';
 import SnakeAnimationSection from '@/components/SnakeAnimationSection';
 import BuyMeCoffeeWidget from "@/components/BuyMeCoffeeWidget";
 import ScrollProgress from '@/components/ScrollProgress';
+import FAQSection from '@/components/FAQSection';
 
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [exiting, setExiting] = useState(false);
-    const rafId = useRef(null);
-    const ticking = useRef(false);
-
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (!ticking.current) {
-                rafId.current = requestAnimationFrame(() => {
-                    const scrolled = window.scrollY;
-                    const hero = document.querySelector('.sticky-hero');
-                    if (hero && scrolled < window.innerHeight) {
-                        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-                        hero.style.opacity = 1 - (scrolled / window.innerHeight);
-                    }
-                    ticking.current = false;
-                });
-                ticking.current = true;
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (rafId.current) cancelAnimationFrame(rafId.current);
-        };
-    }, []);
 
 
     useEffect(() => {
@@ -85,17 +59,17 @@ export default function Home() {
         <>
             <SmoothCursor />
             <ScrollProgress />
-            <HeaderSection />
 
             <main className="relative">
-                <div className="sticky-hero">
+                <div className="relative z-20">
                     <HeroSection />
                 </div>
 
-                <div className="relative z-10 bg-black">
+                <div className="relative z-10 bg-[black]">
                     <AboutSection />
                     <WorkSection />
                     <SnakeAnimationSection />
+                    <FAQSection />
                     <BuyMeCoffeeWidget />
                     <ContactSection />
                 </div>

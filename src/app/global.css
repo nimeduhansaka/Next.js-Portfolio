@@ -16,37 +16,6 @@ html::-webkit-scrollbar {
 }
 
 
-.sticky-hero {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    z-index: 1;
-}
-
-.sticky-hero section {
-    height: 100vh;
-}
-
-main {
-    position: relative;
-}
-
-main > div:last-child {
-    position: relative;
-    z-index: 10;
-}
-
-/* Optional: Add a smooth transition effect */
-.sticky-hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
-    pointer-events: none;
-}
 
 
 /* Clip any accidental horizontal spill from sections/containers */
@@ -192,9 +161,7 @@ svg, path, * {
     cursor: none !important;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+
 
 .custom-cursor {
     position: fixed;
@@ -583,4 +550,21 @@ div.mouse{
   body {
     @apply bg-background text-foreground;
     }
+}
+
+
+/* For Spotlight */
+@theme inline {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
 }

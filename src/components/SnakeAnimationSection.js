@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { AuroraText } from "@/components/ui/aurora-text"
+import { BlurFade } from "@/components/ui/blur-fade"
 
 export default function SnakeAnimationSection() {
     const wrapperRef = useRef(null);
@@ -160,46 +160,109 @@ export default function SnakeAnimationSection() {
     }, []);
 
     return (
-        <div className="snake-stage-wrapper tracking-wider -mt-20 md:mt-[30px]" ref={wrapperRef} >
-            <div className="stage">
-
-                <h1 className="mt-[3em] whitespace-normal wrap-break-word">Need a break<span
-                        className="inline-block mx-1 align-baseline leading-[0.7] text-[2.5em] md:text-[3em]"> ? </span> {' '}
-                    Chill with my UI.
-                </h1>
-
-                <svg id="svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="g1" x1="0" x2="1">
-                            <stop offset="0%" stopColor="#88f" stopOpacity="0.12"/>
-                            <stop offset="100%" stopColor="#6f8" stopOpacity="0.07"/>
-                        </linearGradient>
-                        <radialGradient id="snakeGrad">
-                            <stop offset="0%" stopColor="#ffe58a"/>
-                            <stop offset="55%" stopColor="#ffb248"/>
-                            <stop offset="100%" stopColor="#ff7b33"/>
-                        </radialGradient>
-                    </defs>
-
-                    <path id="track" d="M40 160 C 180 40, 380 260, 540 160 S 860 40, 1040 160" fill="none"
-                          stroke="url(#g1)" strokeWidth="2" strokeOpacity="0.15"/>
-
-                    <path id="glow" d="M40 160 C 180 40, 380 260, 540 160 S 860 40, 1040 160" fill="none"
-                          stroke="#9fb1ff" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.06"/>
-
-                    <g id="snake"></g>
-                    <g id="headLayer"></g>
-                </svg>
-
-                <div className="controls mx-auto mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center text-sm sm:text-base">
-                    <label>Speed <input id="speed" type="range" min="0.5" max="4" step="0.1"
-                                        defaultValue="1.6"/></label>
-                    <label>Wiggle <input id="amp" type="range" min="0" max="30" step="1" defaultValue="12"/></label>
-                    <label>Segments <input id="segments" type="range" min="6" max="40" step="1"
-                                           defaultValue="22"/></label>
+        <section className="py-20 md:py-32 relative text-white" ref={wrapperRef}>
+            <div className="container mx-auto px-6">
+                
+                {/* Header text styled minimalistically */}
+                <div className="flex flex-col items-center text-center gap-6 mb-16">
+                    <BlurFade>
+                        <h2 className="font-serif tracking-tight flex items-center justify-center">
+                            <span className="text-4xl md:text-5xl lg:text-[4rem] text-white">Need a break</span>
+                            <span className="text-4xl md:text-5xl lg:text-[4rem] text-neutral-400 mx-2 italic font-light drop-shadow-sm">?</span>
+                        </h2>
+                    </BlurFade>
+                    <BlurFade delay={0.2}>
+                        <p className="text-lg md:text-xl text-neutral-400 font-serif leading-relaxed max-w-2xl mx-auto">
+                            Chill with my UI. Play around with the interactive snake and customize its motion.
+                        </p>
+                    </BlurFade>
                 </div>
+
+                {/* Snake Canvas Area */}
+                <BlurFade delay={0.3}>
+                    <div className="w-full flex justify-center mb-12">
+                        <svg
+                            id="svg"
+                            viewBox="0 0 1200 300"
+                            preserveAspectRatio="xMidYMid meet"
+                            className="w-full max-w-5xl overflow-visible"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="g1" x1="0" x2="1">
+                                    <stop offset="0%" stopColor="#88f" stopOpacity="0.12" />
+                                    <stop offset="100%" stopColor="#6f8" stopOpacity="0.07" />
+                                </linearGradient>
+                            </defs>
+
+                            <path
+                                id="track"
+                                d="M40 160 C 180 40, 380 260, 540 160 S 860 40, 1040 160"
+                                fill="none"
+                                stroke="url(#g1)"
+                                strokeWidth="2"
+                                strokeOpacity="0.15"
+                            />
+
+                            <path
+                                id="glow"
+                                d="M40 160 C 180 40, 380 260, 540 160 S 860 40, 1040 160"
+                                fill="none"
+                                stroke="#9fb1ff"
+                                strokeWidth="6"
+                                strokeLinecap="round"
+                                strokeOpacity="0.06"
+                            />
+
+                            <g id="snake"></g>
+                            <g id="headLayer"></g>
+                        </svg>
+                    </div>
+                </BlurFade>
+
+                {/* Minimalist Sliders */}
+                <BlurFade delay={0.4}>
+                    <div className="controls max-w-3xl mx-auto flex flex-col md:flex-row gap-8 items-center justify-center p-6 bg-white/5 border border-white/10 rounded-[20px] backdrop-blur-md">
+                        <label className="flex flex-col items-center gap-3 text-neutral-400 uppercase tracking-widest text-[10px] font-semibold w-full md:w-auto">
+                            Speed
+                            <input
+                                id="speed"
+                                type="range"
+                                min="0.5"
+                                max="4"
+                                step="0.1"
+                                defaultValue="1.6"
+                                className="accent-white cursor-pointer w-40 h-[2px] bg-white/20 appearance-none rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                            />
+                        </label>
+                        <label className="flex flex-col items-center gap-3 text-neutral-400 uppercase tracking-widest text-[10px] font-semibold w-full md:w-auto">
+                            Wiggle
+                            <input
+                                id="amp"
+                                type="range"
+                                min="0"
+                                max="30"
+                                step="1"
+                                defaultValue="12"
+                                className="accent-white cursor-pointer w-40 h-[2px] bg-white/20 appearance-none rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                            />
+                        </label>
+                        <label className="flex flex-col items-center gap-3 text-neutral-400 uppercase tracking-widest text-[10px] font-semibold w-full md:w-auto">
+                            Segments
+                            <input
+                                id="segments"
+                                type="range"
+                                min="6"
+                                max="40"
+                                step="1"
+                                defaultValue="22"
+                                className="accent-white cursor-pointer w-40 h-[2px] bg-white/20 appearance-none rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                            />
+                        </label>
+                    </div>
+                </BlurFade>
+
             </div>
-        </div>
+        </section>
     );
 }

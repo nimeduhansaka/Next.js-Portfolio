@@ -1,187 +1,76 @@
-
-// 'use client';
-// import Link from 'next/link';
-// import { useRef, useState, useEffect } from 'react';
-//
-// export function Dock({ items = [], className = '' }) {
-//     const containerRef = useRef(null);
-//     const itemRefs = useRef([]);
-//     const [scales, setScales] = useState(() => items.map(() => 1));
-//
-//     useEffect(() => {
-//         itemRefs.current = itemRefs.current.slice(0, items.length);
-//     }, [items.length]);
-//
-//     const updateScales = (clientX) => {
-//         const maxScale = 1.8;
-//         const influence = 140; // px range of influence
-//         const next = itemRefs.current.map((el) => {
-//             if (!el) return 1;
-//             const rect = el.getBoundingClientRect();
-//             const center = rect.left + rect.width / 2;
-//             const distance = Math.abs(clientX - center);
-//             const ratio = Math.max(0, (influence - distance) / influence);
-//             return 1 + ratio * (maxScale - 1);
-//         });
-//         setScales(next);
-//     };
-//
-//     const handleMouseMove = (e) => updateScales(e.clientX);
-//     const handleMouseLeave = () => setScales(items.map(() => 1));
-//
-//     return (
-//         <nav
-//             ref={containerRef}
-//             onMouseMove={handleMouseMove}
-//             onMouseLeave={handleMouseLeave}
-//             className={[
-//                 'fixed bottom-4 left-1/2 -translate-x-1/2 z-50',
-//                 'mb-[env(safe-area-inset-bottom)]',
-//                 className,
-//             ].join(' ')}
-//             aria-label="Dock navigation"
-//         >
-//             <div
-//                 className={[
-//                     'flex items-end gap-2 px-3 py-2',
-//                     'rounded-2xl border border-white/15',
-//                     'bg-white/10 dark:bg-black/30',
-//                     'backdrop-blur-md shadow-lg',
-//                 ].join(' ')}
-//             >
-//                 {items.map((item, i) => {
-//                     const content = (
-//                         <div
-//                             ref={(el) => (itemRefs.current[i] = el)}
-//                             title={item.label}
-//                             className={[
-//                                 'size-12 md:size-14',
-//                                 'rounded-xl overflow-hidden',
-//                                 'flex items-center justify-center',
-//                                 'bg-white/10 hover:bg-white/15',
-//                                 'border border-white/10',
-//                                 'transition-[background,transform] duration-150',
-//                                 'text-white',
-//                             ].join(' ')}
-//                             style={{
-//                                 transform: `translateY(${(1 - scales[i]) * 6}px) scale(${scales[i]})`,
-//                                 transformOrigin: 'center bottom',
-//                             }}
-//                             aria-label={item.label}
-//                         >
-//                             {typeof item.icon === 'function' ? item.icon({ size: 22 }) : item.icon}
-//                         </div>
-//                     );
-//
-//                     if (item.external) {
-//                         return (
-//                             <a
-//                                 key={item.label}
-//                                 href={item.href}
-//                                 target="_blank"
-//                                 rel="noopener noreferrer"
-//                                 aria-label={item.label}
-//                             >
-//                                 {content}
-//                             </a>
-//                         );
-//                     }
-//
-//                     return (
-//                         <Link key={item.label} href={item.href} aria-label={item.label}>
-//                             {content}
-//                         </Link>
-//                     );
-//                 })}
-//             </div>
-//         </nav>
-//     );
-// }
-
-// 'use client';
-// import { useEffect, useState } from 'react';
-// import { Dock } from '@/components/ui/dock';
-// import { Home, User, Briefcase, Mail, Github } from 'lucide-react';
-//
-// export default function DockBar() {
-//     const items = [
-//         { label: 'Home', href: '#home', icon: (p) => <Home {...p} /> },
-//         { label: 'About', href: '#about', icon: (p) => <User {...p} /> },
-//         { label: 'Projects', href: '#projects', icon: (p) => <Briefcase {...p} /> },
-//         { label: 'Contact', href: '#contact', icon: (p) => <Mail {...p} /> },
-//         { label: 'GitHub', href: 'https://github.com/nimeduhansaka', external: true, icon: (p) => <Github {...p} /> },
-//     ];
-//
-//     const [visible, setVisible] = useState(false);
-//
-//     useEffect(() => {
-//         const el = document.querySelector('#home');
-//
-//         // Fallback: show when scrolled some distance if #home is missing
-//         if (!el) {
-//             const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.3);
-//             onScroll();
-//             window.addEventListener('scroll', onScroll, { passive: true });
-//             return () => window.removeEventListener('scroll', onScroll);
-//         }
-//
-//         const io = new IntersectionObserver(
-//             ([entry]) => {
-//                 // Show dock when home is not intersecting enough
-//                 setVisible(!entry.isIntersecting);
-//             },
-//             { threshold: 0.6 }
-//         );
-//
-//         io.observe(el);
-//         return () => io.disconnect();
-//     }, []);
-//
-//     const visibilityClasses = visible
-//         ? 'opacity-100 translate-y-0 pointer-events-auto'
-//         : 'opacity-0 translate-y-4 pointer-events-none';
-//
-//     return <Dock items={items} className={visibilityClasses} />;
-// }
-
 'use client';
 import Link from 'next/link';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export function Dock({ items = [], className = '' }) {
-    const containerRef = useRef(null);
-    const itemRefs = useRef([]);
-    const [scales, setScales] = useState(() => items.map(() => 1));
+    const [activeHash, setActiveHash] = useState('');
 
+    // Track active section based on the window hash and scrolling
     useEffect(() => {
-        itemRefs.current = itemRefs.current.slice(0, items.length);
-    }, [items.length]);
+        const handleHashChange = () => {
+            setActiveHash(window.location.hash || '#home');
+        };
+        
+        let observers = [];
+        let interval;
+        
+        const setupObservers = () => {
+            // Check what sections exist
+            const hashItems = items.filter(item => item.href.startsWith('#'));
+            const targets = hashItems.map(item => ({
+                href: item.href,
+                element: document.getElementById(item.href.substring(1))
+            }));
+            
+            // If the sections aren't in the DOM yet (e.g. due to Preloader), wait and retry
+            if (targets.some(target => !target.element)) {
+                return false;
+            }
 
-    const updateScales = (clientX) => {
-        const maxScale = 1.8;
-        const influence = 140;
-        const next = itemRefs.current.map((el) => {
-            if (!el) return 1;
-            const rect = el.getBoundingClientRect();
-            const center = rect.left + rect.width / 2;
-            const distance = Math.abs(clientX - center);
-            const ratio = Math.max(0, (influence - distance) / influence);
-            return 1 + ratio * (maxScale - 1);
-        });
-        setScales(next);
-    };
+            // Cleanup any existing observers before attaching new ones
+            observers.forEach(obs => obs.disconnect());
+            observers = [];
 
-    const handleMouseMove = (e) => updateScales(e.clientX);
-    const handleMouseLeave = () => setScales(items.map(() => 1));
+            targets.forEach(target => {
+                const observer = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            setActiveHash(target.href);
+                        }
+                    },
+                    { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+                );
+                observer.observe(target.element);
+                observers.push(observer);
+            });
+            
+            return true;
+        };
+
+        // Retry every 500ms until sections are loaded into DOM
+        if (!setupObservers()) {
+            interval = setInterval(() => {
+                if (setupObservers()) {
+                    clearInterval(interval);
+                }
+            }, 500);
+        }
+
+        handleHashChange();
+        window.addEventListener('hashchange', handleHashChange);
+        
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange);
+            clearInterval(interval);
+            observers.forEach(obs => obs.disconnect());
+        };
+    }, [items]);
 
     return (
         <nav
-            ref={containerRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className={[
-                'fixed inset-x-0 bottom-4 z-50 flex justify-center',
-                'pb-[env(safe-area-inset-bottom)]',
+                'fixed inset-x-0 top-6 z-50 flex justify-center',
                 'transition-all duration-300',
                 'pointer-events-none',
                 className,
@@ -191,45 +80,54 @@ export function Dock({ items = [], className = '' }) {
             <div
                 className={[
                     'pointer-events-auto',
-                    'flex items-end gap-2 px-3 py-2',
-                    'rounded-lg border border-white/15',
-                    'bg-white/10 dark:bg-black/30',
-                    'backdrop-blur-md shadow-lg',
+                    'flex items-center gap-4 px-4 py-3',
+                    'rounded-full',
+                    'bg-[#121212]/40 backdrop-blur-2xl',
+                    'border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.15)]',
                     'w-max max-w-[92vw]',
                 ].join(' ')}
             >
-                {items.map((item, i) => {
+                {items.map((item) => {
+                    const isActive = activeHash === item.href;
+                    
                     const content = (
                         <div
-                            ref={(el) => (itemRefs.current[i] = el)}
                             title={item.label}
                             className={[
-                                'size-12 md:size-14',
-                                'rounded-md overflow-hidden',
+                                'relative size-12',
                                 'flex items-center justify-center',
-                                'bg-white/10 hover:bg-white/15',
-                                'border border-white/10',
-                                'transition-[background,transform] duration-150',
-                                'text-white',
+                                'transition-colors duration-200 ease-out z-10',
+                                isActive 
+                                    ? 'text-white' 
+                                    : 'text-neutral-500 hover:text-white',
                             ].join(' ')}
-                            style={{
-                                transform: `translateY(${(1 - scales[i]) * 6}px) scale(${scales[i]})`,
-                                transformOrigin: 'center bottom',
-                            }}
                             aria-label={item.label}
                         >
-                            {typeof item.icon === 'function' ? item.icon({ size: 22 }) : item.icon}
+                            {isActive && (
+                                <motion.div
+                                    layoutId="dock-active-circle"
+                                    className="absolute inset-0 bg-[#2a2a2a]/80 shadow-md backdrop-blur-sm border border-white/5 rounded-full -z-10"
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 350,
+                                        damping: 30,
+                                    }}
+                                />
+                            )}
+                            {typeof item.icon === 'function' ? item.icon({ size: 22, strokeWidth: isActive ? 2.5 : 2 }) : item.icon}
                         </div>
                     );
 
-                    if (item.external) {
+                    if (item.external || item.download) {
                         return (
                             <a
                                 key={item.label}
                                 href={item.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                target={item.external ? "_blank" : undefined}
+                                rel={item.external ? "noopener noreferrer" : undefined}
+                                download={item.download ? true : undefined}
                                 aria-label={item.label}
+                                className="focus:outline-none"
                             >
                                 {content}
                             </a>
@@ -237,7 +135,13 @@ export function Dock({ items = [], className = '' }) {
                     }
 
                     return (
-                        <Link key={item.label} href={item.href} aria-label={item.label}>
+                        <Link 
+                            key={item.label} 
+                            href={item.href} 
+                            aria-label={item.label}
+                            className="focus:outline-none"
+                            onClick={() => setActiveHash(item.href)}
+                        >
                             {content}
                         </Link>
                     );
@@ -246,4 +150,3 @@ export function Dock({ items = [], className = '' }) {
         </nav>
     );
 }
-

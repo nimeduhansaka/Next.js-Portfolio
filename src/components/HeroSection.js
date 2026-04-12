@@ -154,7 +154,7 @@ export default function Hero() {
                     fill
                     className="object-contain object-bottom opacity-90"
                     sizes="(max-width: 1024px) 100vw, 1024px"
-                    priority={false}
+                    priority={true}
                     quality={100}
                 />
             </div>

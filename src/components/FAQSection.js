@@ -64,12 +64,14 @@ export default function FAQSection() {
                                             {isOpen ? <Minus size={20} strokeWidth={1.5} className="text-[#f4f4f5]" /> : <Plus size={20} strokeWidth={1.5} className="text-[#f4f4f5]" />}
                                         </div>
                                     </button>
-                                    <div 
-                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100 pb-6 md:pb-8 px-6 md:px-8' : 'max-h-0 opacity-0 px-6 md:px-8'}`}
-                                    >
-                                        <p className="text-[#a1a1aa] leading-relaxed text-sm md:text-base font-sans">
-                                            {faq.answer}
-                                        </p>
+                                    <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                                        <div className="overflow-hidden">
+                                            <div className="pb-6 md:pb-8 px-6 md:px-8">
+                                                <p className="text-[#a1a1aa] leading-relaxed text-sm md:text-base font-sans">
+                                                    {faq.answer}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </BlurFade>

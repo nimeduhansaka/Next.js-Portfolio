@@ -109,8 +109,8 @@ export function Dock({ items = [], className = '' }) {
                                     className="absolute inset-0 bg-[#2a2a2a]/80 shadow-md backdrop-blur-sm border border-white/5 rounded-full -z-10"
                                     transition={{
                                         type: "spring",
-                                        stiffness: 350,
-                                        damping: 30,
+                                        bounce: 0.2,
+                                        duration: 0.5,
                                     }}
                                 />
                             )}

@@ -38,7 +38,7 @@ export default function WorkSection() {
     return (
         <section id="work" className="py-20 md:py-32 relative text-white">
             <div className="container mx-auto px-6 max-w-4xl">
-                <BlurFade className="mb-16 md:mb-24">
+                <BlurFade inView className="mb-16 md:mb-24">
                     <div className="flex items-center gap-4">
                         <h2 className="text-3xl md:text-5xl font-serif tracking-tight flex items-start gap-1">
                             Projects <span className="text-xs md:text-sm font-sans text-gray-500 font-normal mt-1 md:mt-2">({projects.length})</span>
@@ -46,7 +46,7 @@ export default function WorkSection() {
                         <div className="flex-1 h-[1px] bg-white/10 mx-2 md:mx-6"></div>
                         <button 
                             onClick={() => setShowAll(!showAll)}
-                            className="text-sm font-sans font-bold text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                            className="text-lg font-sans font-bold text-[#d2f2cb] hover:text-white transition-colors whitespace-nowrap"
                         >
                             {showAll ? 'See less' : 'See all'}
                         </button>
@@ -55,7 +55,7 @@ export default function WorkSection() {
 
                 <div className="flex flex-col gap-20">
                     {visibleProjects.map((project, index) => (
-                        <BlurFade key={project.title} delay={0.2 + (index % 2) * 0.1}>
+                        <BlurFade inView key={project.title} delay={0.2 + (index % 2) * 0.1}>
                             <div className="group cursor-pointer">
                                 <div className="relative overflow-hidden mb-6 aspect-[4/3] md:aspect-[16/10] rounded-[24px]">
                                     <Image

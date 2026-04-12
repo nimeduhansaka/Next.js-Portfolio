@@ -140,7 +140,20 @@ export function Dock({ items = [], className = '' }) {
                             href={item.href} 
                             aria-label={item.label}
                             className="focus:outline-none"
-                            onClick={() => setActiveHash(item.href)}
+                            onClick={(e) => {
+                                if (item.href.startsWith('#')) {
+                                    e.preventDefault();
+                                    const targetId = item.href.substring(1);
+                                    const element = document.getElementById(targetId);
+                                    if (element) {
+                                        element.scrollIntoView({ behavior: 'smooth' });
+                                        setActiveHash(item.href);
+                                        window.history.pushState(null, '', item.href);
+                                    }
+                                } else {
+                                    setActiveHash(item.href);
+                                }
+                            }}
                         >
                             {content}
                         </Link>

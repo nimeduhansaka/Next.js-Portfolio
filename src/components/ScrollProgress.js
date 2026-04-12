@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 
 export default function ScrollProgress() {
     const [isVisible, setIsVisible] = useState(false);
@@ -12,20 +12,16 @@ export default function ScrollProgress() {
         restDelta: 0.001
     });
 
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        if (typeof window !== 'undefined') {
+            setIsVisible(latest > window.innerHeight * 0.8);
+        }
+    });
+
     useEffect(() => {
-        const handleScroll = () => {
-            // Show after scrolling past 100vh (approx Hero section height)
-            if (window.scrollY > window.innerHeight * 0.8) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Check initial state
-
-        return () => window.removeEventListener('scroll', handleScroll);
+        if (typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.8) {
+            setIsVisible(true);
+        }
     }, []);
 
     if (!isVisible) return null;

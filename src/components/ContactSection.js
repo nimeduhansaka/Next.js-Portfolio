@@ -1,9 +1,30 @@
 'use client';
 import { Twitter, Github, Linkedin, Mail } from 'lucide-react';
 import Image from 'next/image';
+import { BlurFade } from "@/components/ui/blur-fade";
 import DarkPortrait from '../assets/DarkPortrait.png';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ContactSection() {
+    const [portraitVisible, setPortraitVisible] = useState(false);
+    const portraitRef = useRef(null);
+
+    useEffect(() => {
+        const el = portraitRef.current;
+        if (!el) return;
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setPortraitVisible(true);
+                    io.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+        io.observe(el);
+        return () => io.disconnect();
+    }, []);
+
     const socials = [
         { icon: Twitter, label: 'X', href: 'https://x.com/nimedu' },
         { icon: Github, label: 'GitHub', href: 'https://github.com/nimeduhansaka' },
@@ -16,17 +37,20 @@ export default function ContactSection() {
             {/* The wrapper ID is required for BuyMeCoffeeWidget */}
             <div id="bottom-section" className="container mx-auto px-6 relative z-10 flex flex-col items-center pt-10">
                 
-                <div className="text-center mb-10 md:mb-12">
-                    <p className="text-3xl md:text-4xl font-serif text-gray-400 mb-1 md:mb-2 tracking-tight">
-                        Let&apos;s create something
-                    </p>
-                    <p className="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
-                        awesome together.
-                    </p>
-                </div>
+                <BlurFade inView>
+                    <div className="text-center mb-10 md:mb-12">
+                        <p className="text-3xl md:text-4xl font-serif text-gray-400 mb-1 md:mb-2 tracking-tight">
+                            Let&apos;s create something
+                        </p>
+                        <p className="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
+                            awesome together.
+                        </p>
+                    </div>
+                </BlurFade>
                 
-                <div className="flex items-center justify-center gap-8 mb-10 md:mb-0">
-                    {socials.map((social) => {
+                <BlurFade inView delay={0.2}>
+                    <div className="flex items-center justify-center gap-8 mb-10 md:mb-0">
+                        {socials.map((social) => {
                         const Icon = social.icon;
                         return (
                             <a
@@ -41,10 +65,11 @@ export default function ContactSection() {
                             </a>
                         );
                     })}
-                </div>
+                    </div>
+                </BlurFade>
             </div>
 
-            <div className="w-full flex-1 min-h-[400px] mt-auto relative z-0 max-w-[800px] mx-auto">
+            <div ref={portraitRef} className={`w-full flex-1 min-h-[400px] mt-auto relative z-0 max-w-[800px] mx-auto transition-all duration-[1200ms] ease-out transform ${portraitVisible ? 'translate-y-0 opacity-100' : 'translate-y-[15vh] opacity-0'}`}>
                 <Image 
                     src={DarkPortrait}
                     alt="Dark Portrait"

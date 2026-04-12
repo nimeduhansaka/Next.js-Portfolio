@@ -2,7 +2,7 @@ import './global.css';
 import DockBar from "@/components/DockBar"
 
 export const metadata = {
-    title: 'Portfolio',
+    title: 'Nimedu Hansaka | Creative Developer',
     description: 'Nimedu Hansaka Personal site',
 };
 

@@ -165,13 +165,13 @@ export default function SnakeAnimationSection() {
                 
                 {/* Header text styled minimalistically */}
                 <div className="flex flex-col items-center text-center gap-6 mb-16">
-                    <BlurFade>
+                    <BlurFade inView>
                         <h2 className="font-serif tracking-tight flex items-center justify-center">
                             <span className="text-4xl md:text-5xl lg:text-[4rem] text-white">Need a break</span>
                             <span className="text-4xl md:text-5xl lg:text-[4rem] text-neutral-400 mx-2 italic font-light drop-shadow-sm">?</span>
                         </h2>
                     </BlurFade>
-                    <BlurFade delay={0.2}>
+                    <BlurFade inView delay={0.2}>
                         <p className="text-lg md:text-xl text-neutral-400 font-serif leading-relaxed max-w-2xl mx-auto">
                             Chill with my UI. Play around with the interactive snake and customize its motion.
                         </p>
@@ -179,7 +179,7 @@ export default function SnakeAnimationSection() {
                 </div>
 
                 {/* Snake Canvas Area */}
-                <BlurFade delay={0.3}>
+                <BlurFade inView delay={0.3}>
                     <div className="w-full flex justify-center mb-12">
                         <svg
                             id="svg"
@@ -221,7 +221,7 @@ export default function SnakeAnimationSection() {
                 </BlurFade>
 
                 {/* Minimalist Sliders */}
-                <BlurFade delay={0.4}>
+                <BlurFade inView delay={0.4}>
                     <div className="controls max-w-3xl mx-auto flex flex-col md:flex-row gap-8 items-center justify-center p-6 bg-white/5 border border-white/10 rounded-[20px] backdrop-blur-md">
                         <label className="flex flex-col items-center gap-3 text-neutral-400 uppercase tracking-widest text-[10px] font-semibold w-full md:w-auto">
                             Speed

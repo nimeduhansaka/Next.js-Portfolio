@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useSpring } from "motion/react"
 
 const DefaultCursorSVG = () => {
   return (
@@ -10,7 +9,7 @@ const DefaultCursorSVG = () => {
       height={54}
       viewBox="0 0 50 54"
       fill="none"
-      style={{ scale: 0.5 }}>
+      style={{ scale: 0.5, transform: "rotate(-25deg)" }}>
       <g filter="url(#filter0_d_91_7928)">
         <path
           d="M42.6817 41.1495L27.5103 6.79925C26.7269 5.02557 24.2082 5.02558 23.3927 6.79925L7.59814 41.1495C6.75833 42.9759 8.52712 44.8902 10.4125 44.1954L24.3757 39.0496C24.8829 38.8627 25.4385 38.8627 25.9422 39.0496L39.8121 44.1954C41.6849 44.8902 43.4884 42.9759 42.6817 41.1495Z"
@@ -56,34 +55,9 @@ const DefaultCursorSVG = () => {
 
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
-
-  springConfig = {
-    damping: 45,
-    stiffness: 400,
-    mass: 1,
-    restDelta: 0.001,
-  }
 }) {
   const [isMobile, setIsMobile] = useState(false)
-  const [isMoving, setIsMoving] = useState(false)
-  const lastMousePos = useRef({ x: 0, y: 0 })
-  const velocity = useRef({ x: 0, y: 0 })
-  const lastUpdateTime = useRef(Date.now())
-  const previousAngle = useRef(0)
-  const accumulatedRotation = useRef(0)
-
-  const cursorX = useSpring(0, springConfig)
-  const cursorY = useSpring(0, springConfig)
-  const rotation = useSpring(0, {
-    ...springConfig,
-    damping: 60,
-    stiffness: 300,
-  })
-  const scale = useSpring(1, {
-    ...springConfig,
-    stiffness: 500,
-    damping: 35,
-  })
+  const cursorRef = useRef(null)
 
   useEffect(() => {
     const query = window.matchMedia("(pointer: coarse), (max-width: 768px)")
@@ -103,98 +77,37 @@ export function SmoothCursor({
       return
     }
 
-    const updateVelocity = (currentPos) => {
-      const currentTime = Date.now()
-      const deltaTime = currentTime - lastUpdateTime.current
-
-      if (deltaTime > 0) {
-        velocity.current = {
-          x: (currentPos.x - lastMousePos.current.x) / deltaTime,
-          y: (currentPos.y - lastMousePos.current.y) / deltaTime,
-        }
+    const handleMouseMove = (e) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.left = `${e.clientX}px`
+        cursorRef.current.style.top = `${e.clientY}px`
       }
-
-      lastUpdateTime.current = currentTime
-      lastMousePos.current = currentPos
-    }
-
-    const smoothMouseMove = (e) => {
-      const currentPos = { x: e.clientX, y: e.clientY }
-      updateVelocity(currentPos)
-
-      const speed = Math.sqrt(Math.pow(velocity.current.x, 2) + Math.pow(velocity.current.y, 2))
-
-      cursorX.set(currentPos.x)
-      cursorY.set(currentPos.y)
-
-      if (speed > 0.1) {
-        const currentAngle =
-          Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) +
-          90
-
-        let angleDiff = currentAngle - previousAngle.current
-        if (angleDiff > 180) angleDiff -= 360
-        if (angleDiff < -180) angleDiff += 360
-        accumulatedRotation.current += angleDiff
-        rotation.set(accumulatedRotation.current)
-        previousAngle.current = currentAngle
-
-        scale.set(0.95)
-        setIsMoving(true)
-
-        const timeout = setTimeout(() => {
-          scale.set(1)
-          setIsMoving(false)
-        }, 150)
-
-        return () => clearTimeout(timeout);
-      }
-    }
-
-    let rafId
-    const throttledMouseMove = (e) => {
-      if (rafId) return
-
-      rafId = requestAnimationFrame(() => {
-        smoothMouseMove(e)
-        rafId = 0
-      })
     }
 
     document.body.style.cursor = "none"
-    window.addEventListener("mousemove", throttledMouseMove)
+    window.addEventListener("mousemove", handleMouseMove)
 
     return () => {
-      window.removeEventListener("mousemove", throttledMouseMove)
+      window.removeEventListener("mousemove", handleMouseMove)
       document.body.style.cursor = "auto"
-      if (rafId) cancelAnimationFrame(rafId)
     };
-  }, [cursorX, cursorY, rotation, scale, isMobile])
+  }, [isMobile])
 
   if (isMobile) return null
 
   return (
-    <motion.div
+    <div
+      ref={cursorRef}
       style={{
         position: "fixed",
-        left: cursorX,
-        top: cursorY,
-        translateX: "-50%",
-        translateY: "-50%",
-        rotate: rotation,
-        scale: scale,
+        left: 0,
+        top: 0,
+        transform: "translate(-50%, -50%)",
         zIndex: 100,
         pointerEvents: "none",
-        willChange: "transform",
-      }}
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 30,
       }}>
       {cursor}
-    </motion.div>
+    </div>
   );
 }
+

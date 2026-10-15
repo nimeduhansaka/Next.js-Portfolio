@@ -2,34 +2,36 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { BlurFade } from "@/components/ui/blur-fade"
+import carenestSample from '@/assets/carenest-sample.png';
+import smartR from '@/assets/smartR.png';
 
 export default function WorkSection() {
     const [showAll, setShowAll] = useState(false);
 
     const projects = [
         {
-            title: 'E-Commerce Platform',
-            description: 'A full-featured online store with payment integration and inventory management.',
-            image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-            tags: ['React', 'Node.js', 'MongoDB'],
+            title: 'Maternal Child Healthcare Management System',
+            description: 'Developed a full-stack healthcare management platform designed to support maternal and child healthcare',
+            image: carenestSample,
+            tags: ['React.js', 'Next.js', 'Supabase', 'AI'],
         },
         {
-            title: 'Social Media Dashboard',
-            description: 'Real-time analytics dashboard for tracking social media performance.',
-            image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800',
-            tags: ['TypeScript', 'Charts', 'API'],
+            title: 'Rental Marketplace Platform',
+            description: 'Developed a rental marketplace platform that connects users with available products',
+            image: smartR,
+            tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
         },
         {
-            title: 'Portfolio Generator',
-            description: 'Tool for creating beautiful portfolio websites with drag-and-drop interface.',
+            title: 'ASCII Art Converter',
+            description: 'Image-to-ASCII Web Application',
             image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800',
-            tags: ['React', 'Tailwind', 'Firebase'],
+            tags: ['React.js', 'Vite', 'Tailwind CSS', 'Canvas API'],
         },
         {
-            title: 'Fitness Tracking App',
-            description: 'Mobile-first application for tracking workouts and nutrition goals.',
+            title: 'Salon App',
+            description: 'Salon Management Booking Application',
             image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=800',
-            tags: ['React Native', 'Redux', 'REST API'],
+            tags: ['React Native', 'Expo', 'Supabase', 'JavaScrip'],
         },
     ];
 

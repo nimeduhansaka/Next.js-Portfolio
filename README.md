@@ -144,7 +144,8 @@ Settings → Build configuration** and use:
 
 Replace the old `npx @cloudflare/next-on-pages@1` build command for both production
 and preview builds if they have separate overrides. The tracked `wrangler.toml`
-declares the output directory; the build command must still be changed in the
+declares the project name (`next-js-portfolio`), output directory, and runtime
+compatibility date required by Pages; the build command must still be changed in the
 dashboard. Git-integrated Pages deploys the build output automatically, so no
 separate `wrangler deploy` or `npm run deploy` command is needed.
 

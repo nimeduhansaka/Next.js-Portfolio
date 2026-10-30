@@ -14,8 +14,8 @@ A modern, responsive developer portfolio built with **Next.js**, designed to sho
   - Projects / Case Studies
   - Experience / Timeline
   - Contact / Call-to-Action
-- **Optimized images** using Next.js `Image` component 
-- **Fast performance** with static generation / server-side rendering 
+- **Images** using Next.js `Image`, served directly as static assets
+- **Fast performance** with static export and client-side interactions
 - Easily customizable **theme, colors, and content**
 
 ---
@@ -109,23 +109,10 @@ Common places to change content include:
 
 ## 📦 Scripts
 
-Document the most important `package.json` scripts :
-
-```json
-{
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  }
-}
-```
-
 - `npm run dev` – Start development server
-- `npm run build` – Build the production application
-- `npm run start` – Run the production build
-- `npm run lint` – Run lint checks
+- `npm run build` – Export the production site to `out/`
+- `npm start` – Preview the exported `out/` directory locally after building
+- `npm run deploy` – Publish `out/` to GitHub Pages (legacy optional command, not used by Cloudflare)
 
 ---
 
@@ -139,45 +126,49 @@ Document the most important `package.json` scripts :
 
 ## 🌐 Deployment
 
-### Cloudflare Workers
+### Cloudflare Pages (static export)
 
-Use `npm run build` as the build command and `npx wrangler deploy` as the
-deploy command. Without a Wrangler configuration file, Wrangler automatically
-configures the project for Workers.
+This portfolio exports HTML, CSS, JavaScript, and images to `out/`. Its animations,
+mouse interactions, and navigation run in the browser. It does not need a Worker
+or the deprecated `@cloudflare/next-on-pages` adapter.
 
-If deployment reports that Next.js `14.2.33` cannot be automatically configured,
-deploy the latest revision of your connected branch. Commit `41f49f5` updates
-both `package.json` and `package-lock.json` to Next.js `14.2.35`, the minimum
-version required by the Wrangler version in that error.
+In the Cloudflare dashboard, open **Workers & Pages → your Pages project →
+Settings → Build configuration** and use:
 
-1. Ensure the Cloudflare production branch includes that commit.
-2. Start a new deployment of the latest commit instead of retrying the old revision.
-3. Check that the build log shows `Next.js 14.2.35` or newer. If it still shows
-   `14.2.33`, verify the connected repository, branch, and root directory, then
-   clear the build cache and deploy again.
+| Setting | Value |
+| --- | --- |
+| Framework preset | Next.js (Static HTML Export) |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+| Root directory | Repository root (leave blank) |
 
-To verify the locked dependency and production build locally:
+Replace the old `npx @cloudflare/next-on-pages@1` build command for both production
+and preview builds if they have separate overrides. The tracked `wrangler.toml`
+declares the output directory; the build command must still be changed in the
+dashboard. Git-integrated Pages deploys the build output automatically, so no
+separate `wrangler deploy` or `npm run deploy` command is needed.
+
+Push these changes to the connected production branch, then create a new
+deployment of the latest commit. Retrying an older deployment can rebuild its
+old revision. If the log still runs `next-on-pages`, check the saved build command,
+branch, and root directory before retrying.
+
+To verify the exported site locally:
 
 ```bash
 npm ci
-npm ls next
 npm run build
+npm start
 ```
 
-You can deploy this Next.js portfolio easily using platforms like:
+Images use `unoptimized: true` because static Pages hosting does not provide the
+Next.js image-optimization endpoint. Local images are included in the export;
+external images are loaded directly from their original URLs. Server-only features
+such as API routes, Server Actions, and runtime image optimization would require
+a different deployment setup if added later.
 
-- [Vercel](https://vercel.com/) – first-class Next.js support
-- [Netlify](https://www.netlify.com/)
-- [Cloudflare](https://www.cloudflare.com/)
-
-
-Typical Vercel deployment steps:
-
-1. Push your code to GitHub.
-2. Go to Vercel, import the repository.
-3. Configure the project (build command usually `next build`, output `.next`).
-4. Set any required environment variables.
-5. Deploy and connect your custom domain if desired.
+See the [Cloudflare static Next.js guide](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/)
+and [Next.js static export documentation](https://nextjs.org/docs/14/app/building-your-application/deploying/static-exports).
 
 ---
 

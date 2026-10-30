@@ -6,7 +6,10 @@ const withBundleAnalyzer = nextBundleAnalyzer({
 });
 
 const nextConfig = {
+  output: 'export',
   images: {
+    // Cloudflare Pages serves static assets without the Next.js image server.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,7 +18,5 @@ const nextConfig = {
     ],
   },
 };
-
-// Trigger restart for new dependencies
 
 export default withBundleAnalyzer(nextConfig);

@@ -139,6 +139,31 @@ Document the most important `package.json` scripts :
 
 ## 🌐 Deployment
 
+### Cloudflare Workers
+
+Use `npm run build` as the build command and `npx wrangler deploy` as the
+deploy command. Without a Wrangler configuration file, Wrangler automatically
+configures the project for Workers.
+
+If deployment reports that Next.js `14.2.33` cannot be automatically configured,
+deploy the latest revision of your connected branch. Commit `41f49f5` updates
+both `package.json` and `package-lock.json` to Next.js `14.2.35`, the minimum
+version required by the Wrangler version in that error.
+
+1. Ensure the Cloudflare production branch includes that commit.
+2. Start a new deployment of the latest commit instead of retrying the old revision.
+3. Check that the build log shows `Next.js 14.2.35` or newer. If it still shows
+   `14.2.33`, verify the connected repository, branch, and root directory, then
+   clear the build cache and deploy again.
+
+To verify the locked dependency and production build locally:
+
+```bash
+npm ci
+npm ls next
+npm run build
+```
+
 You can deploy this Next.js portfolio easily using platforms like:
 
 - [Vercel](https://vercel.com/) – first-class Next.js support

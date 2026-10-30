@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { BlurFade } from "@/components/ui/blur-fade";
 import DarkPortrait from '../assets/DarkPortrait.png';
 import { useEffect, useRef, useState } from 'react';
+import { MagneticLink } from '@/components/ui/interactive-surface';
 
 export default function ContactSection() {
     const [portraitVisible, setPortraitVisible] = useState(false);
@@ -53,16 +54,16 @@ export default function ContactSection() {
                         {socials.map((social) => {
                         const Icon = social.icon;
                         return (
-                            <a
+                            <MagneticLink
                                 key={social.label}
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white hover:text-gray-400 transition-colors duration-300"
+                                className="social-link text-white transition-colors duration-300"
                                 aria-label={social.label}
                             >
                                 <Icon size={24} strokeWidth={1.5} />
-                            </a>
+                            </MagneticLink>
                         );
                     })}
                     </div>

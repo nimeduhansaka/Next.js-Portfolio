@@ -1,6 +1,136 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Quiet motion and surface details, using the existing sage accent. */
+html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+::selection { background: #d2f2cb; color: #101510; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid #d2f2cb !important;
+    outline-offset: 6px;
+    border-radius: 12px;
+}
+
+.hero-ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 24%, rgb(210 242 203 / 3%), transparent 55%);
+}
+.hero-ambient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: var(--surface-active, 0);
+    background: radial-gradient(480px circle at var(--pointer-x, 50%) var(--pointer-y, 25%), rgb(210 242 203 / 6%), transparent 75%);
+    transition: opacity 700ms ease;
+}
+.skill-marquee:hover { animation-play-state: paused; }
+.interactive-surface { position: relative; isolation: isolate; }
+.interactive-surface::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 20;
+    background: radial-gradient(380px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgb(210 242 203 / 9%), transparent 70%);
+    opacity: var(--surface-active, 0);
+    transition: opacity 500ms ease;
+}
+.surface-tilt {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 450ms cubic-bezier(.22, 1, .36, 1), box-shadow 450ms ease;
+}
+.project-image { border: 1px solid rgb(255 255 255 / 8%); }
+.project-card h3 { transition: color 300ms ease; }
+.skill-card { transition: background-color 400ms ease, box-shadow 400ms ease; }
+.magnetic-link { position: relative; }
+.magnetic-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px));
+    transition: transform 350ms cubic-bezier(.22, 1, .36, 1);
+}
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 10%);
+    background: rgb(255 255 255 / 2%);
+}
+.faq-card { border: 1px solid transparent; }
+.faq-card.is-open { border-color: rgb(210 242 203 / 18%); }
+.faq-card button > div { transition: background-color 300ms ease, color 300ms ease; }
+.faq-card.is-open button > div { background: rgb(210 242 203 / 10%); }
+.portfolio-dock a { position: relative; border-radius: 50%; }
+.portfolio-dock a > div { transition: transform 300ms cubic-bezier(.22, 1, .36, 1), color 250ms ease; }
+.dock-tooltip {
+    position: absolute;
+    top: calc(100% + 22px);
+    left: 50%;
+    padding: 6px 10px;
+    background: #181818;
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    color: #e5e5e5;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -4px);
+    transition: opacity 200ms ease, transform 200ms ease;
+}
+.portfolio-dock a:focus-visible .dock-tooltip { opacity: 1; transform: translate(-50%, 0); }
+.portfolio-cursor { transition: opacity 180ms ease; }
+.cursor-arrow { display: block; transform: translate(-50%, -50%); }
+.cursor-halo {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) scale(.5);
+    border: 1px solid rgb(210 242 203 / 40%);
+    background: rgb(210 242 203 / 4%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 250ms ease, transform 350ms cubic-bezier(.22, 1, .36, 1);
+}
+.portfolio-cursor.is-interactive .cursor-halo { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+@media (hover: hover) and (pointer: fine) {
+    .project-card:hover h3 { color: #d2f2cb; }
+    .project-card:hover .project-image { box-shadow: 0 18px 60px -30px rgb(210 242 203 / 18%); }
+    .skill-card:hover { background: rgb(255 255 255 / 2%); box-shadow: 0 12px 40px -24px rgb(210 242 203 / 15%); }
+    .social-link:hover { color: #d2f2cb; border-color: rgb(210 242 203 / 35%); background: rgb(210 242 203 / 5%); }
+    .portfolio-dock a:hover > div { transform: translateY(-3px); }
+    .portfolio-dock a:hover .dock-tooltip { opacity: 1; transform: translate(-50%, 3px); }
+}
+@media (max-width: 640px) {
+    .portfolio-dock > div { gap: 8px; padding: 8px 12px; }
+    .social-link { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .surface-tilt, .magnetic-label { transform: none !important; }
+    .portfolio-cursor, .hero-ambient::after { display: none; }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 
@@ -148,17 +278,9 @@ body {
 }
 
 
-/* For Cursor */
-* {
-    cursor: none !important;
-}
-
-html, body, #root,
-a, a:hover, a:focus,
-button, [role="button"],
-input, select, textarea, label,
-svg, path, * {
-    cursor: none !important;
+/* Keep the native cursor until the desktop enhancement is ready. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .custom-cursor-ready, .custom-cursor-ready * { cursor: none !important; }
 }
 
 

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const DefaultCursorSVG = () => {
   return (
@@ -56,57 +56,59 @@ const DefaultCursorSVG = () => {
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
 }) {
-  const [isMobile, setIsMobile] = useState(false)
   const cursorRef = useRef(null)
 
   useEffect(() => {
-    const query = window.matchMedia("(pointer: coarse), (max-width: 768px)")
-    const handleChange = () => setIsMobile(query.matches)
-    handleChange()
-    if (query.addEventListener) query.addEventListener("change", handleChange)
-    else query.addListener(handleChange)
-    return () => {
-      if (query.removeEventListener) query.removeEventListener("change", handleChange)
-      else query.removeListener(handleChange)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.cursor = "auto"
-      return
-    }
-
-    const handleMouseMove = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX}px`
-        cursorRef.current.style.top = `${e.clientY}px`
-      }
-    }
-
-    document.body.style.cursor = "none"
-    window.addEventListener("mousemove", handleMouseMove)
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      document.body.style.cursor = "auto"
+    const query = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    const element = cursorRef.current;
+    let frame = 0;
+    const hide = () => {
+      cancelAnimationFrame(frame);
+      document.documentElement.classList.remove('custom-cursor-ready');
+      element.style.opacity = '0';
     };
-  }, [isMobile])
-
-  if (isMobile) return null
+    const move = (event) => {
+      if (!query.matches || event.pointerType === 'touch') return;
+      cancelAnimationFrame(frame);
+      const interactive = event.target instanceof Element && event.target.closest('a, button, input, textarea, select, [role="button"]');
+      frame = requestAnimationFrame(() => {
+        element.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+        element.style.opacity = '1';
+        element.classList.toggle('is-interactive', Boolean(interactive));
+        document.documentElement.classList.add('custom-cursor-ready');
+      });
+    };
+    const keyboard = (event) => { if (event.key === 'Tab') hide(); };
+    window.addEventListener('pointermove', move, { passive: true });
+    document.addEventListener('pointerleave', hide);
+    window.addEventListener('blur', hide);
+    window.addEventListener('keydown', keyboard);
+    query.addEventListener('change', hide);
+    return () => {
+      hide();
+      window.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerleave', hide);
+      window.removeEventListener('blur', hide);
+      window.removeEventListener('keydown', keyboard);
+      query.removeEventListener('change', hide);
+    };
+  }, [])
 
   return (
     <div
       ref={cursorRef}
+      className="portfolio-cursor"
+      aria-hidden="true"
       style={{
         position: "fixed",
         left: 0,
         top: 0,
-        transform: "translate(-50%, -50%)",
+        opacity: 0,
         zIndex: 100,
         pointerEvents: "none",
       }}>
-      {cursor}
+      <span className="cursor-halo" />
+      <span className="cursor-arrow">{cursor}</span>
     </div>
   );
 }

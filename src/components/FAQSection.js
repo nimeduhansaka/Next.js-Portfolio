@@ -51,9 +51,12 @@ export default function FAQSection() {
                         return (
                             <BlurFade inView key={faq.question} delay={0.1 + index * 0.1}>
                                 <div 
-                                    className={`bg-[#121212] hover:bg-[#18181a] transition-colors duration-300 rounded-[20px] overflow-hidden mb-1`}
+                                    className={`faq-card ${isOpen ? 'is-open' : ''} bg-[#121212] hover:bg-[#18181a] transition-colors duration-300 rounded-[20px] overflow-hidden mb-1`}
                                 >
                                     <button 
+                                        id={`faq-question-${index}`}
+                                        aria-expanded={isOpen}
+                                        aria-controls={`faq-answer-${index}`}
                                         onClick={() => setOpenIndex(isOpen ? null : index)}
                                         className="w-full flex items-center justify-between p-6 md:px-8 md:py-6 text-left"
                                     >
@@ -64,7 +67,7 @@ export default function FAQSection() {
                                             {isOpen ? <Minus size={20} strokeWidth={1.5} className="text-[#f4f4f5]" /> : <Plus size={20} strokeWidth={1.5} className="text-[#f4f4f5]" />}
                                         </div>
                                     </button>
-                                    <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                                    <div id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`} aria-hidden={!isOpen} className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                                         <div className="overflow-hidden">
                                             <div className="pb-6 md:pb-8 px-6 md:px-8">
                                                 <p className="text-[#a1a1aa] leading-relaxed text-sm md:text-base font-sans">

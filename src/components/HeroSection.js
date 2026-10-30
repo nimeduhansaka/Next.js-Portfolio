@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Highlighter } from "@/components/ui/highlighter"
 import { BlurFade } from "@/components/ui/blur-fade"
 import DarkPortrait from '@/assets/DarkPortrait.png';
+import { MagneticLink, usePointerSurface } from '@/components/ui/interactive-surface';
 
 export default function Hero() {
     const [showIndicator, setShowIndicator] = useState(true);
     const heroRef = useRef(null);
+    usePointerSurface(heroRef);
     const [showPopup, setShowPopup] = useState(false);
     const [portraitVisible, setPortraitVisible] = useState(false);
 
@@ -59,7 +61,8 @@ export default function Hero() {
     }, []);
 
     return (
-        <section id="home" ref={heroRef} className="min-h-screen flex flex-col justify-start pt-[14vh] md:pt-[12vh] lg:pt-[14vh] xl:pt-[18vh] relative text-center overflow-hidden">
+        <section id="home" ref={heroRef} className="hero-surface min-h-screen flex flex-col justify-start pt-[14vh] md:pt-[12vh] lg:pt-[14vh] xl:pt-[18vh] relative text-center overflow-hidden">
+            <div className="hero-ambient" aria-hidden="true" />
             <div className="container mx-auto px-6 relative z-10 flex-shrink-0 mb-4 md:mb-6 xl:mb-8">
                 <div className="flex flex-col items-center flex-1 max-w-4xl mx-auto text-center gap-4 md:gap-5 xl:gap-7">
                     <BlurFade>
@@ -79,9 +82,9 @@ export default function Hero() {
                                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
                             }}
                         >
-                            <div className="flex w-max animate-infinite-scroll hover:paused">
+                            <div className="skill-marquee flex w-max animate-infinite-scroll">
                                 {[1, 2].map((group) => (
-                                    <div key={group} className="flex gap-3 pr-3">
+                                    <div key={group} aria-hidden={group === 2 ? true : undefined} className="flex gap-3 pr-3">
                                         {["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "UI/UX Design", "React Native"].map((skill, idx) => (
                                             <div 
                                                 key={idx} 
@@ -120,20 +123,20 @@ export default function Hero() {
 
                     <BlurFade delay={0.4}>
                         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 mt-1 md:mt-2 font-sans">
-                            <a
+                            <MagneticLink
                                 href="#work"
                                 className="inline-flex items-center justify-center px-8 py-3.5 bg-[#d2f2cb] text-black font-medium rounded-[20px] shadow-[0_4px_20px_rgba(210,242,203,0.15)] hover:shadow-[0_15px_40px_rgba(210,242,203,0.4)] hover:bg-[#cbf0c2] hover:-translate-y-1 transition-all duration-400 ease-out tracking-wide text-sm md:text-base"
                             >
                                 See work
-                            </a>
-                            <a
+                            </MagneticLink>
+                            <MagneticLink
                                 href="https://periodic-table-ui.pages.dev/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-white/20 text-white hover:bg-white hover:text-black font-medium rounded-[20px] hover:shadow-[0_15px_40px_rgba(255,255,255,0.15)] hover:-translate-y-1 transition-all duration-400 ease-out tracking-wide text-sm md:text-base"
                             >
                                 Latest work
-                            </a>
+                            </MagneticLink>
                         </div>
                     </BlurFade>
                 </div>

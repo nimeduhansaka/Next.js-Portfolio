@@ -1,6 +1,7 @@
 'use client';
 import { Code2, Palette, Zap, Award, Rocket } from 'lucide-react';
 import { BlurFade } from "@/components/ui/blur-fade"
+import { InteractiveSurface } from '@/components/ui/interactive-surface';
 
 export default function AboutSection() {
     const skills = [
@@ -81,8 +82,7 @@ export default function AboutSection() {
                         const Icon = skill.icon;
                         return (
                             <BlurFade inView key={skill.title} delay={0.2 + index * 0.1}>
-                                <div className="group relative overflow-hidden rounded-[20px] h-full">
-                                    <div className="absolute inset-0 bg-white/5 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-[20px]" />
+                                <InteractiveSurface className="skill-card group relative overflow-hidden rounded-[20px] h-full">
                                     <div className="relative p-10 border border-white/10 hover:border-white/30 transition-colors duration-300 rounded-[20px] h-full flex flex-col items-center text-center">
                                         <Icon
                                             size={40}
@@ -92,7 +92,7 @@ export default function AboutSection() {
                                         <p className="text-neutral-400 leading-relaxed">{skill.description}</p>
                                         <div className="mt-8 h-[1px] w-0 bg-white group-hover:w-full transition-all duration-500" />
                                     </div>
-                                </div>
+                                </InteractiveSurface>
                             </BlurFade>
                         );
                     })}

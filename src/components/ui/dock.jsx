@@ -70,7 +70,7 @@ export function Dock({ items = [], className = '' }) {
     return (
         <nav
             className={[
-                'fixed inset-x-0 top-6 z-50 flex justify-center',
+                'portfolio-dock fixed inset-x-0 top-6 z-50 flex justify-center',
                 'transition-all duration-300',
                 'pointer-events-none',
                 className,
@@ -115,6 +115,7 @@ export function Dock({ items = [], className = '' }) {
                                 />
                             )}
                             {typeof item.icon === 'function' ? item.icon({ size: 22, strokeWidth: isActive ? 2.5 : 2 }) : item.icon}
+                            <span className="dock-tooltip" aria-hidden="true">{item.label}</span>
                         </div>
                     );
 
@@ -139,6 +140,7 @@ export function Dock({ items = [], className = '' }) {
                             key={item.label} 
                             href={item.href} 
                             aria-label={item.label}
+                            aria-current={isActive ? 'location' : undefined}
                             className="focus:outline-none"
                             onClick={(e) => {
                                 if (item.href.startsWith('#')) {
@@ -146,7 +148,7 @@ export function Dock({ items = [], className = '' }) {
                                     const targetId = item.href.substring(1);
                                     const element = document.getElementById(targetId);
                                     if (element) {
-                                        element.scrollIntoView({ behavior: 'smooth' });
+                                        element.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
                                         setActiveHash(item.href);
                                         window.history.pushState(null, '', item.href);
                                     }

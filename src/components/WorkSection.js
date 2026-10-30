@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { BlurFade } from "@/components/ui/blur-fade"
 import carenestSample from '@/assets/carenest-sample.png';
 import smartR from '@/assets/smartR.png';
+import { InteractiveSurface } from '@/components/ui/interactive-surface';
 
 export default function WorkSection() {
     const [showAll, setShowAll] = useState(false);
@@ -47,6 +48,8 @@ export default function WorkSection() {
                         </h2>
                         <div className="flex-1 h-[1px] bg-white/10 mx-2 md:mx-6"></div>
                         <button 
+                            aria-expanded={showAll}
+                            aria-controls="project-list"
                             onClick={() => setShowAll(!showAll)}
                             className="text-lg font-sans font-bold text-[#d2f2cb] hover:text-white transition-colors whitespace-nowrap"
                         >
@@ -55,11 +58,11 @@ export default function WorkSection() {
                     </div>
                 </BlurFade>
 
-                <div className="flex flex-col gap-20">
+                <div id="project-list" className="flex flex-col gap-20">
                     {visibleProjects.map((project, index) => (
                         <BlurFade inView key={project.title} delay={0.2 + (index % 2) * 0.1}>
-                            <div className="group cursor-pointer">
-                                <div className="relative overflow-hidden mb-6 aspect-[4/3] md:aspect-[16/10] rounded-[24px]">
+                            <div className="group project-card">
+                                <InteractiveSurface tilt className="project-image relative overflow-hidden mb-6 aspect-[4/3] md:aspect-[16/10] rounded-[24px]">
                                     <Image
                                         src={project.image}
                                         alt={project.title}
@@ -72,7 +75,7 @@ export default function WorkSection() {
                                             {project.tags.join(', ')}
                                         </span>
                                     </div>
-                                </div>
+                                </InteractiveSurface>
 
                                 <div className="flex flex-col gap-2">
                                     <h3 className="text-2xl md:text-3xl font-serif tracking-tight transition-colors">
